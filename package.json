@@ -1,0 +1,16 @@
+{
+  "name": "motion",
+  "version": "1.0.0",
+  "description": "2dof motion software",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Colton Maring",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^23.2.0",
+    "three": "^0.151.2"
+  }
+}

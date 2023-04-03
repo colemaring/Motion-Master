@@ -1,0 +1,129 @@
+<!--index.html-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Cole Maring</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class = "content">
+        <div class = "leftContainer">
+            <div class = "tabContainer pretty">
+                <div class="tab">
+                    <button class="tablinks" id = "inputButton">Input</button>
+                    <button class="tablinks" id = "cueingButton">Cueing</button>
+                    <button class="tablinks" id = "axisAssignmentsButton">Axis Assignments</button>
+                    <button class="tablinks" id = "testButton">Test</button>
+                    <button class="tablinks" id = "outputButton">Output</button>
+                </div>
+                
+                <div id="input" class="tabcontent">
+                    <h3>Input</h3>
+                    <select name="game" id="gameSelector">
+                        <option value="FH5">FH5</option>
+                        <option value="saab">other game</option>
+                    </select>
+                    <label for="gameSelector">game</label><br>
+                    <input value = "5300" type="text" id = "portSelector">
+                    <label for="portSelector">port</label><br>
+                    <button id = "inputApply">apply</button>
+                    <p> </p>
+                </div>
+                <div id="cueing" class="tabcontent">
+                    <h3>Cueing</h3>
+                    <input type="range" id = "linearAccelSlider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
+                    <label for="linearAccelSlider">linear acceleration sensitivity</label><br>
+                    <input type="range" id = "maAccelSlider" step = 1 value = 1 min = 1 max = 30>
+                    <label for="maAccelSlider">motion smoothing</label><br>
+                    <input type="range" id = "rawSlider" step = 0.001 value = 2 min = 0.001 max = 4>
+                    <label for="rawSlider">pitch and roll sensitivity</label><br>
+                    <input type="range" id = "maRawSlider" step = 1 value = 8 min = 01 max = 20>
+                    <label for="maRawSlider">motion smoothing</label><br>
+                    <button id = "cueingApply">apply</button>
+                    <p> </p>
+                </div>
+                <div id="axisAssignments" class="tabcontent">
+                    <h3>Axis Assignemnts</h3>
+                    <select name="servo1" id="servo1">
+                        <option value="pitch">pitch</option>
+                        <option value="roll">roll</option>
+                    </select>
+                    <label for="servo1">servo 1</label><br>
+                    <select name="servo2" id="servo2">
+                        <option value="pitch">pitch</option>
+                        <option value="roll">roll</option>
+                    </select>
+                    <label for="servo2">servo 2</label><br>
+                    <input type="text" id = "maxPitchAngle">
+                    <label for="maxPitchAngle">max pitch angle in degrees</label><br>
+                    <input type="text" id = "maxRollAngle">
+                    <label for="maxRollAngle">max roll angle in degrees</label><br>
+                    <button id = "axisAssignmentsApply">apply</button>
+                </div>
+                <div id="test" class="tabcontent">
+                    <h3>Test</h3>
+                    <p>warning: this will move your simulator!</p>
+                    <input type="range" id = "pitchTestSlider">
+                    <label for="pitchTestSlider">test pitch motion / servo 1</label><br>
+                    <input type="range" id = "rollTestSlider">
+                    <label for="rollTestSlider">test roll motion / servo 2</label><br>
+
+                    <p> </p>
+                </div>            
+                <div id="output" class="tabcontent">
+                    <h3>Output</h3>
+                    <input type="checkbox" id="linearAccelCheckbox">
+                    <label for="linearAccelCheckbox"> use linear acceleration</label><br>
+                    <input type="checkbox" id="pitchAndRollCheckbox">
+                    <label for="pitchAndRollCheckbox"> use pitch and roll</label><br>
+                    <button id = "outputApply">apply</button><br><br>
+                    <button id = "startMotion">start motion</button>
+                    <button id = "stopMotion">stop motion</button>
+                    <p> </p>
+                </div>
+            </div>
+
+            <div class = "telemetryContainer">
+                <div class = "tractionCircleContainer pretty square">
+                    <h1>Gs</h1>
+                    <h3 id = "gForce">0</h3>
+                    <canvas id="tractionCircle" width="200" height="200"></canvas>
+                </div>
+    
+                <div class = "telemetryData pretty square">
+                    <h1>pitch</h1>
+                    <h3 id  = "pitchValue">0</h3>
+                    <h1>yaw</h1>
+                    <h3 id  = "yawValue">0</h3>
+                    <h1>roll</h1>
+                    <h3 id  = "rollValue">0</h3>
+                    <h1>rpm</h1>
+                    <h3 id  = "rpmValue">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class = "rightContainer">
+            <div class = "threeSimulation pretty">
+                <!-- <h1>Simulation Motion</h1> -->
+                <canvas id = "simulation"></canvas>
+            </div>
+
+            <div class = "threeReal pretty">
+                <!-- <h1>In-Game Motion</h1> -->
+                <canvas id = "inGame"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="tabmenu.js"></script>
+    <script src="telemetry.js"></script>
+    <script type = "module" src="env.js"></script>
+    <script type = "module" src="env2.js"></script>
+    <script src = "./js/three.min.js"></script>
+    <script src = "./js/threeorbit.js"></script>
+  </body>
+</html>
