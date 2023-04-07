@@ -2,10 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
 }
 
 html {
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .content {
@@ -74,8 +75,55 @@ html {
     width: 100%;
 }
 
+#connectionStatus{
+    margin-top: 10px;
+    color: red;
+}
+
+select, input[type=text], input[type=range]{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 3px;
+}
+
+.inputLabel{
+    font-size: 16px;
+}
+
+.label{
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.button{
+    font-size: 16px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(216, 216, 216);
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: rgb(179, 179, 179);
+}
+
 .tractionCircleContainer {
     margin-right: 1rem;
+    text-align: center;
+}
+
+#tractionCircle{
+    width: 280px;
+    height: 280px;
+}
+
+#gForceTextContainer{
+    z-index: 1;
+    position: absolute;
 }
 
 .telemetryData {
@@ -84,14 +132,15 @@ html {
 
 .square {
     margin-top: 2rem;
+    padding: 1.5rem;
     width: 50%;
 }
 
 .pretty {
-    box-shadow: 0 3px 5px rgb(0 0 0 / 0.1);
-    border: 1px solid black;
+    box-shadow: 0 0px 6px rgb(0 0 0 / 0.4);
+    /* border: 1px solid black; */
     border-radius: 10px;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(255, 255, 255);
 }
 
 .threeSimulation{

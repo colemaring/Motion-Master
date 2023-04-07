@@ -1,20 +1,38 @@
 const {ipcRenderer} = require("electron");
+let timeout;
 
 ipcRenderer.send('cueing', cueing);
 ipcRenderer.send('input', input);
-
 
 drawTractionCircle(0, 0);
 
 ipcRenderer.on('data', (event, data) => {
   // data received from main process
-  document.getElementById("gForce").innerHTML = data[1];
-  document.getElementById("pitchValue").innerHTML = data[3];
-  document.getElementById("yawValue").innerHTML = data[2]; //just for display
-  document.getElementById("rollValue").innerHTML = data[4];
-  document.getElementById("rpmValue").innerHTML = data[0];
+  document.getElementById("gForce").innerHTML = data[1].toFixed(2);
+  document.getElementById("pitchValue").innerHTML = data[3].toFixed(2);
+  document.getElementById("yawValue").innerHTML = data[2].toFixed(2); //just for display
+  document.getElementById("rollValue").innerHTML = data[4].toFixed(2);
+  document.getElementById("rpmValue").innerHTML = data[0].toFixed(2);
+  datar = data[0]
   drawTractionCircle(data[5], data[6]);
+  changeConnectionStatus(data[0]);
 })
+
+// after some time of server inactivity we should change the status
+function changeConnectionStatus(data)
+{
+  if(data >= 0)
+  {
+    document.getElementById("connectionStatus").innerHTML = "connected"
+    document.getElementById("connectionStatus").style.color = "green";
+
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      document.getElementById("connectionStatus").innerHTML = "not connected";
+      document.getElementById("connectionStatus").style.color = "red";
+  }, 500);
+  }
+}
 
 function drawTractionCircle(xAccel, yAccel) {
     var canvas = document.getElementById('tractionCircle');

@@ -1,15 +1,18 @@
 let input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value];
+document.getElementById("inputApply").addEventListener("click", function() {input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value]});
 
 let cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
 document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];
+document.getElementById("cueingApply").addEventListener("click", function() {cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
+document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];});
 
-
-let axisAssign = [document.getElementById("servo1").value, document.getElementById("servo2").value, 
-document.getElementById("maxPitchAngle").value, document.getElementById("maxRollAngle").value];
-
-let test = [document.getElementById("pitchTestSlider").value, document.getElementById("rollTestSlider").value];
+// let axisAssign = [document.getElementById("servo1").value, document.getElementById("servo2").value, 
+// document.getElementById("maxServo1Angle").value, document.getElementById("maxServo2Angle").value];
+// document.getElementById("axisAssignmentsApply").addEventListener("click", function() {axisAssign = [document.getElementById("servo1").value, document.getElementById("servo2").value, 
+// document.getElementById("maxServo1Angle").value, document.getElementById("maxServo2Angle").value];});
 
 let output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];
+document.getElementById("outputApply").addEventListener("click", function() {output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];});
 
 
 document.getElementById("inputButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("input")})
@@ -19,7 +22,7 @@ document.getElementById("testButton").addEventListener("click", function() { cle
 document.getElementById("outputButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("output")})
 document.getElementById("inputButton").click();
 
-document.getElementById("inputApply").addEventListener("click", function() {ipcRenderer.send('input', input); console.log(input[0] + " " + input[1])})
+document.getElementById("inputApply").addEventListener("click", function() {ipcRenderer.send('input', input);})
 document.getElementById("cueingApply").addEventListener("click", function() {ipcRenderer.send('cueing', cueing);})
 document.getElementById("axisAssignmentsApply").addEventListener("click", function() {ipcRenderer.send('axisAssign', axisAssign);})
 document.getElementById("pitchTestSlider").addEventListener("change", function() {ipcRenderer.send('pitchTestSlider', document.getElementById("pitchTestSlider").value);})

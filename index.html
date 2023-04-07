@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <title>Cole Maring</title>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -22,76 +25,80 @@
                 </div>
                 
                 <div id="input" class="tabcontent">
-                    <h3>Input</h3>
+                    <h3 class = "label">Input</h3>
+                    <label class = "inputLabel" for="gameSelector">Game: </label>
                     <select name="game" id="gameSelector">
                         <option value="FH5">FH5</option>
                         <option value="saab">other game</option>
-                    </select>
-                    <label for="gameSelector">game</label><br>
-                    <input value = "5300" type="text" id = "portSelector">
-                    <label for="portSelector">port</label><br>
-                    <button id = "inputApply">apply</button>
+                    </select><br>
+                    <label class = "inputLabel" for="portSelector">Port: </label>
+                    <input value = "5300" type="text" id = "portSelector"><br>
+                    <button class = "button" id = "inputApply">apply</button>
+                    <h3 id = "connectionStatus">not connected</h3>
                     <p> </p>
                 </div>
                 <div id="cueing" class="tabcontent">
-                    <h3>Cueing</h3>
+                    <h3 class = "label">Cueing</h3>
                     <input type="range" id = "linearAccelSlider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
-                    <label for="linearAccelSlider">linear acceleration sensitivity</label><br>
-                    <input type="range" id = "maAccelSlider" step = 1 value = 1 min = 1 max = 30>
-                    <label for="maAccelSlider">motion smoothing</label><br>
+                    <label class = "inputLabel" for="linearAccelSlider">linear acceleration sensitivity</label><br>
+                    <input type="range" id = "maAccelSlider" step = 1 value = 2 min = 1 max = 20>
+                    <label class = "inputLabel" for="maAccelSlider">motion smoothing</label><br>
                     <input type="range" id = "rawSlider" step = 0.001 value = 2 min = 0.001 max = 4>
-                    <label for="rawSlider">pitch and roll sensitivity</label><br>
-                    <input type="range" id = "maRawSlider" step = 1 value = 8 min = 01 max = 20>
-                    <label for="maRawSlider">motion smoothing</label><br>
-                    <button id = "cueingApply">apply</button>
+                    <label class = "inputLabel" for="rawSlider">pitch and roll sensitivity</label><br>
+                    <input type="range" id = "maRawSlider" step = 1 value = 8 min = 1 max = 20>
+                    <label class = "inputLabel" for="maRawSlider">motion smoothing</label><br>
+                    <button  class = "button" id = "cueingApply">apply</button>
                     <p> </p>
                 </div>
                 <div id="axisAssignments" class="tabcontent">
-                    <h3>Axis Assignemnts</h3>
-                    <select name="servo1" id="servo1">
-                        <option value="pitch">pitch</option>
-                        <option value="roll">roll</option>
-                    </select>
-                    <label for="servo1">servo 1</label><br>
-                    <select name="servo2" id="servo2">
-                        <option value="pitch">pitch</option>
-                        <option value="roll">roll</option>
-                    </select>
-                    <label for="servo2">servo 2</label><br>
-                    <input type="text" id = "maxPitchAngle">
-                    <label for="maxPitchAngle">max pitch angle in degrees</label><br>
-                    <input type="text" id = "maxRollAngle">
-                    <label for="maxRollAngle">max roll angle in degrees</label><br>
-                    <button id = "axisAssignmentsApply">apply</button>
+                    <h3 class = "label">Axis Assignemnts</h3>
+                    <input type="checkbox" id="servosBehind">
+                    <label class = "inputLabel" for="servosBehind">servos behind u-joint?</label><br>
+                    <input type="checkbox" id="servosInfront">
+                    <label class = "inputLabel" for="servosInfront">servos infront u-joint?</label><br>
+                    <input type="checkbox" id="servosBehind">
+                    <label class = "inputLabel" for="servosInvert">invert servo rotation?</label><br>
+                    <input type="text" id = "maxServo1Angle">
+                    <label class = "inputLabel" for="maxServo1Angle">servo 1 max usable angle in degrees</label><br>
+                    <input type="text" id = "maxServo2Angle">
+                    <label class = "inputLabel" for="maxServo2Angle">servo 2 max usable angle in degrees</label><br>
+                    <input type="text" id = "minServo1Angle">
+                    <label class = "inputLabel" for="minServo1Angle">servo 1 min usable angle in degrees</label><br>
+                    <input type="text" id = "minServo2Angle">
+                    <label class = "inputLabel" for="minServo2Angle">servo 2 min usable angle in degrees</label><br>
+                    <button class = "button"  id = "axisAssignmentsApply">apply</button>
+                    <p>higher sensitivity cueing will cause motion to reach min and max usuable degrees of servos quicker</p>
                 </div>
                 <div id="test" class="tabcontent">
-                    <h3>Test</h3>
+                    <h3 class = "label">Test</h3>
                     <p>warning: this will move your simulator!</p>
                     <input type="range" id = "pitchTestSlider">
-                    <label for="pitchTestSlider">test pitch motion / servo 1</label><br>
+                    <label class = "inputLabel" for="pitchTestSlider">test pitch motion</label><br>
                     <input type="range" id = "rollTestSlider">
-                    <label for="rollTestSlider">test roll motion / servo 2</label><br>
-
+                    <label class = "inputLabel" for="rollTestSlider">test roll motion</label><br>
                     <p> </p>
                 </div>            
                 <div id="output" class="tabcontent">
-                    <h3>Output</h3>
+                    <h3 class = "label">Output</h3>
                     <input type="checkbox" id="linearAccelCheckbox">
-                    <label for="linearAccelCheckbox"> use linear acceleration</label><br>
+                    <label class = "inputLabel" for="linearAccelCheckbox"> use linear acceleration</label><br>
                     <input type="checkbox" id="pitchAndRollCheckbox">
-                    <label for="pitchAndRollCheckbox"> use pitch and roll</label><br>
-                    <button id = "outputApply">apply</button><br><br>
-                    <button id = "startMotion">start motion</button>
-                    <button id = "stopMotion">stop motion</button>
+                    <label class = "inputLabel" for="pitchAndRollCheckbox"> use pitch and roll</label><br>
+                    <button  class = "button" id = "outputApply">apply</button><br><br>
+                    <button  class = "button" id = "startMotion">start motion</button>
+                    <button  class = "button" id = "stopMotion">stop motion</button>
                     <p> </p>
                 </div>
             </div>
 
             <div class = "telemetryContainer">
                 <div class = "tractionCircleContainer pretty square">
-                    <h1>Gs</h1>
-                    <h3 id = "gForce">0</h3>
-                    <canvas id="tractionCircle" width="200" height="200"></canvas>
+                    <div id = "gForceTextContainer">
+                        <h1>Gs</h1>
+                        <h3 id = "gForce">0</h3>
+                    </div>
+                    
+                    <canvas id="tractionCircle" width="280" height="280"></canvas>
                 </div>
     
                 <div class = "telemetryData pretty square">
