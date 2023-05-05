@@ -10,7 +10,11 @@
   "author": "Colton Maring",
   "license": "MIT",
   "dependencies": {
-    "electron": "^23.2.0",
-    "three": "^0.151.2"
+    "electron": "^24.2.0",
+    "johnny-five": "^2.1.0",
+    "three": "^0.151.3"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.2.12"
   }
 }

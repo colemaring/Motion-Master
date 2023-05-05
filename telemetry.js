@@ -13,7 +13,7 @@ ipcRenderer.on('data', (event, data) => {
   document.getElementById("yawValue").innerHTML = data[2].toFixed(2); //just for display
   document.getElementById("rollValue").innerHTML = data[4].toFixed(2);
   document.getElementById("rpmValue").innerHTML = data[0].toFixed(2);
-  datar = data[0]
+  // datar = data[0]
   drawTractionCircle(data[5], data[6]);
   changeConnectionStatus(data[0]);
 })
