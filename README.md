@@ -2,15 +2,25 @@
 View and control your 2DOF motion simulator in a lightweight application.<br />
 ![motion](https://user-images.githubusercontent.com/65455664/229327411-935b650d-f0bb-4adc-8731-e0b37e9c3afe.gif)
 
-Install:
-git clone https://github.com/colemaring/Motion-Master (clone repo)
-npm install (install dependencies)
-.\node_modules\.bin\electron-rebuild.cmd or $(npm bin)/electron-rebuild (rebuilds johnny-five to match electron node runtime)
-npm run start
+Install:<br />
+git clone https://github.com/colemaring/Motion-Master (clone repo)<br />
+npm install (install dependencies)<br />
+.\node_modules\.bin\electron-rebuild.cmd or $(npm bin)/electron-rebuild (rebuilds johnny-five to match electron node runtime)<br />
+npm run start<br />
 
-Notes for later:
-enable udp on forza 5 and match port
-if errors with rebuild, reinstall nodejs and check choco install
+Configure:<br />
+flash standardFirmataPlus onto arduino uno<br />
+
+Connect arduino to pca9685 as follows<br />
+A5 -> SCL<br />
+A4 -> SDA<br />
+GND -> GND<br />
+5V -> VCC<br />
+servos to pins 0 and 1 on pca9685<br />
+
+Notes for later:<br />
+enable udp on forza 5 and match port<br />
+if errors with rebuild, reinstall nodejs and check choco install<br />
 
 
 Still a WIP
