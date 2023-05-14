@@ -34,7 +34,7 @@
                     <label class = "inputLabel" for="portSelector">Port: </label>
                     <input value = "5300" type="text" id = "portSelector"><br>
                     <button class = "button" id = "inputApply">apply</button>
-                    <h3 id = "connectionStatus">not connected</h3>
+                    <h3 id = "connectionStatus">not connected to game</h3>
                     <p> </p>
                 </div>
                 <div id="cueing" class="tabcontent">
@@ -72,9 +72,9 @@
                 <div id="test" class="tabcontent">
                     <h3 class = "label">Test</h3>
                     <p>warning: this will move your simulator!</p>
-                    <input type="range" id = "pitchTestSlider">
+                    <input type="range" id = "pitchTestSlider" min = "0" max = "180">
                     <label class = "inputLabel" for="pitchTestSlider">test pitch motion</label><br>
-                    <input type="range" id = "rollTestSlider">
+                    <input type="range" id = "rollTestSlider" min = "0" max = "180">
                     <label class = "inputLabel" for="rollTestSlider">test roll motion</label><br>
                     <p> </p>
                 </div>            

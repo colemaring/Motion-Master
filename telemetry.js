@@ -16,6 +16,9 @@ ipcRenderer.on('data', (event, data) => {
   // datar = data[0]
   drawTractionCircle(data[5], data[6]);
   changeConnectionStatus(data[0]);
+
+  // send to servo driver
+  ipcRenderer.send('data-to-main', data);
 })
 
 // after some time of server inactivity we should change the status
@@ -23,12 +26,12 @@ function changeConnectionStatus(data)
 {
   if(data >= 0)
   {
-    document.getElementById("connectionStatus").innerHTML = "connected"
+    document.getElementById("connectionStatus").innerHTML = "connected to game"
     document.getElementById("connectionStatus").style.color = "green";
 
     clearTimeout(timeout)
     timeout = setTimeout(() => {
-      document.getElementById("connectionStatus").innerHTML = "not connected";
+      document.getElementById("connectionStatus").innerHTML = "not connected to game";
       document.getElementById("connectionStatus").style.color = "red";
   }, 500);
   }
