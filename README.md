@@ -10,13 +10,15 @@ npm run start<br />
 
 Configure:<br />
 flash standardFirmataPlus onto arduino uno<br />
-
-Connect arduino to pca9685 as follows<br />
-A5 -> SCL<br />
-A4 -> SDA<br />
-GND -> GND<br />
-5V -> VCC<br />
+connect arduino to pca9685 as follows<br />
+  A5 -> SCL<br />
+  A4 -> SDA<br />
+  GND -> GND<br />
+  5V -> VCC<br />
 servos to pins 0 and 1 on pca9685<br />
+
+Settings:<br />
+settings here
 
 Notes for later:<br />
 enable udp on forza 5 and match port<br />
