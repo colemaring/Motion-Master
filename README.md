@@ -26,3 +26,11 @@ if errors with rebuild, reinstall nodejs and check choco install<br />
 
 
 Still a WIP
+
+V1
+right servo hitting max angle, servo base redesign is needed.
+lots of play in uv joints, design tighter tolerances, can also shrink.
+servos themselves moving around in base. redesign with tigher tolerances and consider glue.
+
+https://github.com/colemaring/Motion-Master/assets/65455664/49d2157e-1708-4f01-8d94-46e70c5ab0cf
+
