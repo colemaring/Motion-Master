@@ -1,35 +1,37 @@
+// if input apply button clicked, send game and port values through ipc renderer as "input"
 let input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value];
 document.getElementById("inputApply").addEventListener("click", function() {input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value]});
+document.getElementById("inputApply").addEventListener("click", function() {ipcRenderer.send('input', input);})
 
+// if cueing apply button clicked, send las, ms, prs, and ms2 values through ipc renderer as "cueing"
 let cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
 document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];
 document.getElementById("cueingApply").addEventListener("click", function() {cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
 document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];});
+document.getElementById("cueingApply").addEventListener("click", function() {ipcRenderer.send('cueing', cueing);})
 
-// let axisAssign = [document.getElementById("servo1").value, document.getElementById("servo2").value, 
-// document.getElementById("maxServo1Angle").value, document.getElementById("maxServo2Angle").value];
-// document.getElementById("axisAssignmentsApply").addEventListener("click", function() {axisAssign = [document.getElementById("servo1").value, document.getElementById("servo2").value, 
-// document.getElementById("maxServo1Angle").value, document.getElementById("maxServo2Angle").value];});
-
+// if output apply button clicked, send arduino port, and checkbox values through ipc renderer as "output"
 let output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];
 document.getElementById("outputApply").addEventListener("click", function() {output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];});
+document.getElementById("outputApply").addEventListener("click", function() {ipcRenderer.send('output', output);})
 
-
+// when tab button clicked
 document.getElementById("inputButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("input")})
 document.getElementById("cueingButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("cueing")})
-document.getElementById("axisAssignmentsButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("axisAssignments")})
 document.getElementById("testButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("test")})
 document.getElementById("outputButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("output")})
+// click so menu is focused when opening program
 document.getElementById("inputButton").click();
 
-document.getElementById("inputApply").addEventListener("click", function() {ipcRenderer.send('input', input);})
-document.getElementById("cueingApply").addEventListener("click", function() {ipcRenderer.send('cueing', cueing);})
-document.getElementById("axisAssignmentsApply").addEventListener("click", function() {ipcRenderer.send('axisAssign', axisAssign);})
+// when test pitch and roll sliders are moved, send their values through ipc renderer as pitch and rollTestSlider respectively
 document.getElementById("pitchTestSlider").addEventListener("input", function() {ipcRenderer.send('pitchTestSlider', document.getElementById("pitchTestSlider").value);})
 document.getElementById("rollTestSlider").addEventListener("input", function() {ipcRenderer.send('rollTestSlider', document.getElementById("rollTestSlider").value);})
-document.getElementById("outputApply").addEventListener("click", function() {ipcRenderer.send('output', output);})
+
+// when output stop and start button are clicked, run a function
 document.getElementById("stopMotion").addEventListener("click", function() {ipcRenderer.send('stop', "foo");})
 document.getElementById("startMotion").addEventListener("click", function() {ipcRenderer.send('start', "foo");})
+
+// tab menu behavior
 
 function clearTabContent()
 {

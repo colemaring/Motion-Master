@@ -9,6 +9,38 @@ html {
     font-size: 12px;
 }
 
+.pitchYawRollRpmFont{
+    font-size: xx-large;
+    width: 29%;
+    margin: 30px;
+}
+
+#PitchYawRollRpmContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+#pitchAndRollText{
+    color:white;
+    position: absolute; 
+    top: 380px;
+    margin-left: 10px;
+}
+
+#gForceText{
+    color:white;
+    position: absolute; 
+    top: 30px;
+    margin-left: 10px;
+}
+
+.centered{
+    text-align: center;
+    font-size: x-larger;
+}
+
 .content {
     display: flex;
     /* background-color: #0093E9;

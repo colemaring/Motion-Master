@@ -18,8 +18,7 @@
             <div class = "tabContainer pretty">
                 <div class="tab">
                     <button class="tablinks" id = "inputButton">Input</button>
-                    <button class="tablinks" id = "cueingButton">Cueing</button>
-                    <button class="tablinks" id = "axisAssignmentsButton">Axis Assignments</button>
+                    <button class="tablinks" id = "cueingButton">Motion Control</button>
                     <button class="tablinks" id = "testButton">Test</button>
                     <button class="tablinks" id = "outputButton">Output</button>
                 </div>
@@ -38,7 +37,7 @@
                     <p> </p>
                 </div>
                 <div id="cueing" class="tabcontent">
-                    <h3 class = "label">Cueing</h3>
+                    <h3 class = "label">Motion Control</h3>
                     <input type="range" id = "linearAccelSlider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
                     <label class = "inputLabel" for="linearAccelSlider">linear acceleration sensitivity</label><br>
                     <input type="range" id = "maAccelSlider" step = 1 value = 2 min = 1 max = 20>
@@ -47,27 +46,12 @@
                     <label class = "inputLabel" for="rawSlider">pitch and roll sensitivity</label><br>
                     <input type="range" id = "maRawSlider" step = 1 value = 8 min = 1 max = 20>
                     <label class = "inputLabel" for="maRawSlider">motion smoothing</label><br>
+                    <input type="checkbox" id="servosInvertX">
+                    <label class = "inputLabel" for="servosInvertX">invert servo rotation over x-axis?</label><br>
+                    <input type="checkbox" id="servosInvertY">
+                    <label class = "inputLabel" for="servosInvertY">invert servo rotation over y axis?</label><br>
                     <button  class = "button" id = "cueingApply">apply</button>
                     <p> </p>
-                </div>
-                <div id="axisAssignments" class="tabcontent">
-                    <h3 class = "label">Axis Assignemnts</h3>
-                    <input type="checkbox" id="servosBehind">
-                    <label class = "inputLabel" for="servosBehind">servos behind u-joint?</label><br>
-                    <input type="checkbox" id="servosInfront">
-                    <label class = "inputLabel" for="servosInfront">servos infront u-joint?</label><br>
-                    <input type="checkbox" id="servosBehind">
-                    <label class = "inputLabel" for="servosInvert">invert servo rotation?</label><br>
-                    <input type="text" id = "maxServo1Angle">
-                    <label class = "inputLabel" for="maxServo1Angle">servo 1 max usable angle in degrees</label><br>
-                    <input type="text" id = "maxServo2Angle">
-                    <label class = "inputLabel" for="maxServo2Angle">servo 2 max usable angle in degrees</label><br>
-                    <input type="text" id = "minServo1Angle">
-                    <label class = "inputLabel" for="minServo1Angle">servo 1 min usable angle in degrees</label><br>
-                    <input type="text" id = "minServo2Angle">
-                    <label class = "inputLabel" for="minServo2Angle">servo 2 min usable angle in degrees</label><br>
-                    <button class = "button"  id = "axisAssignmentsApply">apply</button>
-                    <p>higher sensitivity cueing will cause motion to reach min and max usuable degrees of servos quicker</p>
                 </div>
                 <div id="test" class="tabcontent">
                     <h3 class = "label">Test</h3>
@@ -80,6 +64,8 @@
                 </div>            
                 <div id="output" class="tabcontent">
                     <h3 class = "label">Output</h3>
+                    <label class = "inputLabel" for="arduinoPort">Arduino port: </label>
+                    <input value = "COM3" type="text" id = "arduinoPort"><br>
                     <input type="checkbox" id="linearAccelCheckbox">
                     <label class = "inputLabel" for="linearAccelCheckbox"> use linear acceleration</label><br>
                     <input type="checkbox" id="pitchAndRollCheckbox">
@@ -101,15 +87,23 @@
                     <canvas id="tractionCircle" width="280" height="280"></canvas>
                 </div>
     
-                <div class = "telemetryData pretty square">
-                    <h1>pitch</h1>
-                    <h3 id  = "pitchValue">0</h3>
-                    <h1>yaw</h1>
-                    <h3 id  = "yawValue">0</h3>
-                    <h1>roll</h1>
-                    <h3 id  = "rollValue">0</h3>
-                    <h1>rpm</h1>
-                    <h3 id  = "rpmValue">0</h3>
+                <div class = "telemetryData pretty square" id = "PitchYawRollRpmContainer">
+                    <div id = "pitch">
+                        <h1 class = "pitchYawRollRpmFont">Pitch</h1>
+                        <h3  class = "centered" id  = "pitchValue">0</h3>
+                    </div>
+                    <div id = "yaw">
+                        <h1 class = "pitchYawRollRpmFont">Yaw</h1>
+                        <h3  class = "centered" id  = "yawValue">0</h3>
+                    </div>
+                    <div id = "roll">
+                        <h1 class = "pitchYawRollRpmFont">Roll</h1>
+                        <h3  class = "centered" id  = "rollValue">0</h3>
+                    </div>
+                    <div id = "rpm">  
+                        <h1 class = "pitchYawRollRpmFont">Rpm</h1>
+                        <h3 class = "centered" id  = "rpmValue">0</h3>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,11 +112,13 @@
             <div class = "threeSimulation pretty">
                 <!-- <h1>Simulation Motion</h1> -->
                 <canvas id = "simulation"></canvas>
+                <h1 id = "pitchAndRollText">Pitch and Roll Visualization</h1>
             </div>
 
             <div class = "threeReal pretty">
                 <!-- <h1>In-Game Motion</h1> -->
                 <canvas id = "inGame"></canvas>
+                <h1 id = "gForceText">G-Force Visualization</h1>
             </div>
         </div>
     </div>
