@@ -25,8 +25,7 @@ enable udp on forza 5 and match port<br />
 if errors with rebuild, reinstall nodejs and check choco install<br />
 
 TODO:<br />
-fix pitch and roll motion simulation <br />
-add dimensional lines in theejs scenes <br />
+fix test with output mode selected <br />
 add offsets option for servos <br />
 refactor and format<br />
 fix css styling <br />
