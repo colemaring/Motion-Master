@@ -21,6 +21,19 @@ ipcRenderer.on('data', (event, data) => {
   ipcRenderer.send('data-to-main', data);
 })
 
+
+document.getElementById("arduinoConnected").style.color = "red";
+ipcRenderer.on('update-html-text', (event, newText) => {
+  // Update the HTML text
+  document.getElementById('arduinoConnected').innerText = newText[0];
+  document.getElementById("outputApply").disabled = newText[1];
+  document.getElementById("outputApply2").disabled = !newText[1];
+  if (newText[1] == true)
+  document.getElementById("arduinoConnected").style.color = "green";
+  else
+  document.getElementById("arduinoConnected").style.color = "red";
+});
+
 // after some time of server inactivity we should change the status
 function changeConnectionStatus(data)
 {

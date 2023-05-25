@@ -1,3 +1,5 @@
+
+
 // if input apply button clicked, send game and port values through ipc renderer as "input"
 let input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value];
 document.getElementById("inputApply").addEventListener("click", function() {input = [document.getElementById("gameSelector").value, document.getElementById("portSelector").value]});
@@ -11,9 +13,13 @@ document.getElementById("rawSlider").value, document.getElementById("maRawSlider
 document.getElementById("cueingApply").addEventListener("click", function() {ipcRenderer.send('cueing', cueing);})
 
 // if output apply button clicked, send arduino port, and checkbox values through ipc renderer as "output"
-let output = [document.getElementById("arduinoPort").value, document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];
-document.getElementById("outputApply").addEventListener("click", function() {output = [document.getElementById("arduinoPort").value, document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];});
+let output = document.getElementById("arduinoPort").value;
+document.getElementById("outputApply").addEventListener("click", function() {output = document.getElementById("arduinoPort").value;});
 document.getElementById("outputApply").addEventListener("click", function() {ipcRenderer.send('output', output);})
+
+let output2 = [document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];
+document.getElementById("outputApply2").addEventListener("click", function() {output2 = [document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];});
+document.getElementById("outputApply2").addEventListener("click", function() {ipcRenderer.send('output2', output2);})
 
 // when tab button clicked
 document.getElementById("inputButton").addEventListener("click", function() { clearTabContent(); removeFocus(); showTabContent("input")})
@@ -26,10 +32,6 @@ document.getElementById("inputButton").click();
 // when test pitch and roll sliders are moved, send their values through ipc renderer as pitch and rollTestSlider respectively
 document.getElementById("pitchTestSlider").addEventListener("input", function() {ipcRenderer.send('pitchTestSlider', document.getElementById("pitchTestSlider").value);})
 document.getElementById("rollTestSlider").addEventListener("input", function() {ipcRenderer.send('rollTestSlider', document.getElementById("rollTestSlider").value);})
-
-// when output stop and start button are clicked, run a function
-document.getElementById("stopMotion").addEventListener("click", function() {ipcRenderer.send('stop', "foo");})
-document.getElementById("startMotion").addEventListener("click", function() {ipcRenderer.send('start', "foo");})
 
 // tab menu behavior
 

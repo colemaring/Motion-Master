@@ -4,13 +4,13 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const packetsJS = require('./packets.js')
-const servodriver = require('./servodriver.js')
+// const servodriver = require('./servodriver.js')
 // const servos = require('./servos.js')
 const  isDev = process.env.NODE_ENV !== "production"
-
+let mainWindow;
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     useContentSize: true,
     resizable: false,
@@ -56,4 +56,92 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+const {Board, Servo } = require("johnny-five");
+// const {app, BrowserWindow} = require('electron');
+const {ipcMain } = require('electron')
+// const path = require('path')
+
+let userPort, gForceMode, pitchAndRollMode = null;
+
+
+ipcMain.on("output2", (event, value) => {
+  gForceMode = value[0];
+  pitchAndRollMode = value[1];
+})
+
+ipcMain.on("output", (event, value) => {
+    userPort = value;
+    // console.log("COM3" === userPort)
+
+    const board = new Board({
+        repl: false,
+        port: userPort,
+        // timeout: 1
+      });
+      
+      const controller = "PCA9685";
+  
+      
+      board.on("ready", () => {
+        console.log("Connected");
+        mainWindow.webContents.send('update-html-text', ["Connected", true]);
+        let pitch, yaw, roll;
+      
+        // Initialize the servo instance
+        const a = new Servo({
+          controller,
+          pin: 0,
+        });
+      
+        const b = new Servo({
+          controller,
+          range: [0, 180],
+          pin: 1,
+        });
+      
+        ipcMain.on('data-to-main', (event, data) => {
+           // data received from main process
+          pitch = data[3];
+          yaw = data[2]; 
+          roll = data[4];
+          xAccel = data[5];
+          yAccel = data[6];
+      
+      
+           if (gForceMode)
+           {
+              // arbitrary scalars dont really matter here
+              let pitchVal = xAccel * -400;
+              let rollVal = yAccel * -400;
+              b.to(pitchVal + rollVal + 110);
+              a.to(pitchVal + -1 * rollVal + 90);
+           }
+           else if (pitchAndRollMode)
+           { 
+              // arbitrary scalers used to have proper pitch / roll ratio
+              let pitchVal = pitch * -10;
+              let rollVal = roll * -10;
+              b.to(pitchVal*-1 + rollVal + 110);
+              a.to(pitchVal + rollVal + 90);
+           }
+        });
+
+        ipcMain.on("pitchTestSlider", (event, value) => {
+            a.to(value);
+            b.to(-value + 180);
+          })
+          
+          ipcMain.on("rollTestSlider", (event, value) => {
+            a.to(value);
+            b.to(value);
+          })
+})
+
+board.on("exit", () => {
+  mainWindow.webContents.send('update-html-text',  ["Disconnected", true]);
+});
+
+
+});
 
