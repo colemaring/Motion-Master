@@ -24,6 +24,11 @@ Notes for later:<br />
 enable udp on forza 5 and match port<br />
 if errors with rebuild, reinstall nodejs and check choco install<br />
 
+TODO:<br />
+fix reestablishing borad connection <br />
+refactor and format<br />
+fix css styling <br />
+
 
 Still a WIP
 
