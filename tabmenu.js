@@ -5,14 +5,14 @@ document.getElementById("inputApply").addEventListener("click", function() {ipcR
 
 // if cueing apply button clicked, send las, ms, prs, and ms2 values through ipc renderer as "cueing"
 let cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
-document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];
+document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value, document.getElementById("servosInvertX").checked, document.getElementById("servosInvertY").checked];
 document.getElementById("cueingApply").addEventListener("click", function() {cueing = [document.getElementById("linearAccelSlider").value, document.getElementById("maAccelSlider").value, 
-document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value];});
+document.getElementById("rawSlider").value, document.getElementById("maRawSlider").value, document.getElementById("servosInvertX").checked, document.getElementById("servosInvertY").checked] });
 document.getElementById("cueingApply").addEventListener("click", function() {ipcRenderer.send('cueing', cueing);})
 
 // if output apply button clicked, send arduino port, and checkbox values through ipc renderer as "output"
-let output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];
-document.getElementById("outputApply").addEventListener("click", function() {output = [document.getElementById("linearAccelCheckbox").value, document.getElementById("pitchAndRollCheckbox").value];});
+let output = [document.getElementById("arduinoPort").value, document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];
+document.getElementById("outputApply").addEventListener("click", function() {output = [document.getElementById("arduinoPort").value, document.getElementById("linearAccelCheckbox").checked, document.getElementById("pitchAndRollCheckbox").checked];});
 document.getElementById("outputApply").addEventListener("click", function() {ipcRenderer.send('output', output);})
 
 // when tab button clicked

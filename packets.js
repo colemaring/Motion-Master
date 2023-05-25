@@ -2,7 +2,10 @@ const {ipcMain, BrowserWindow } = require('electron')
 const dgram = require("dgram");
 let server = dgram.createSocket("udp4");
 let game, port, linearAccelValue, maAccelValue, rawValue, maRawValue = null;
+let invertPitch, invertRoll = 1;
 
+
+// when apply button clicked on input tab
 ipcMain.on("input", (event, input) => {
   game = input[0];
   port = input[1];
@@ -23,11 +26,21 @@ ipcMain.on("input", (event, input) => {
   }
 });
 
+// when apply button clicked on cueing tab
 ipcMain.on("cueing", (event, cueing) => {
   linearAccelValue = cueing[0];
   maAccelValue = cueing[1];
   rawValue = cueing[2];
   maRawValue = cueing[3];
+
+  if (cueing[4])
+    invertPitch = -1;
+  else
+    invertPitch = 1;
+  if (cueing[5])
+    invertRoll = -1;
+  else
+    invertRoll = 1;
 })
 
 server.on("message", handleMessage);
@@ -38,11 +51,11 @@ function handleMessage(msg)
 
   if(game === "FH5"){
     rpm = Math.floor(Buffer.from(msg.slice(16, 20)).readFloatLE() * 100) / 100;
-    xAccel = Math.floor(Buffer.from(msg.slice(20, 24)).readFloatLE() * 100) / 100;
-    zAccel = Math.floor(Buffer.from(msg.slice(28, 32)).readFloatLE() * 100) / 100;
+    xAccel = invertRoll * Math.floor(Buffer.from(msg.slice(20, 24)).readFloatLE() * 100) / 100;
+    zAccel = invertPitch * Math.floor(Buffer.from(msg.slice(28, 32)).readFloatLE() * 100) / 100;
     yaw = Math.floor(Buffer.from(msg.slice(32+24, 36+24)).readFloatLE() * 10000) / 100;
-    pitch = Math.floor(Buffer.from(msg.slice(36+24, 40+24)).readFloatLE() * 10000) / 100;
-    roll = Math.floor(Buffer.from(msg.slice(40+24, 44+24)).readFloatLE() * 10000) / 100;
+    pitch = invertPitch * Math.floor(Buffer.from(msg.slice(36+24, 40+24)).readFloatLE() * 10000) / 100;
+    roll = invertRoll * Math.floor(Buffer.from(msg.slice(40+24, 44+24)).readFloatLE() * 10000) / 100;
   }
 
   const returnData = [rpm, 0, yaw, pitch, roll, xAccel, zAccel];
@@ -63,6 +76,8 @@ function dataProcessing(data){
   const returnData = [rpm, gForce, yaw, pitch, roll, xAccel, yAccel];
   return returnData;
 }
+
+// need to rename these functions
 
 const movingAverage = (function() {
   let windowSize = maAccelValue;

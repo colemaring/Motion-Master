@@ -19,8 +19,8 @@
                 <div class="tab">
                     <button class="tablinks" id = "inputButton">Input</button>
                     <button class="tablinks" id = "cueingButton">Motion Control</button>
-                    <button class="tablinks" id = "testButton">Test</button>
                     <button class="tablinks" id = "outputButton">Output</button>
+                    <button class="tablinks" id = "testButton">Test</button>
                 </div>
                 
                 <div id="input" class="tabcontent">
@@ -28,53 +28,52 @@
                     <label class = "inputLabel" for="gameSelector">Game: </label>
                     <select name="game" id="gameSelector">
                         <option value="FH5">FH5</option>
-                        <option value="saab">other game</option>
                     </select><br>
                     <label class = "inputLabel" for="portSelector">Port: </label>
                     <input value = "5300" type="text" id = "portSelector"><br>
-                    <button class = "button" id = "inputApply">apply</button>
+                    <button class = "button" id = "inputApply">Apply</button>
                     <h3 id = "connectionStatus">not connected to game</h3>
                     <p> </p>
                 </div>
                 <div id="cueing" class="tabcontent">
                     <h3 class = "label">Motion Control</h3>
                     <input type="range" id = "linearAccelSlider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
-                    <label class = "inputLabel" for="linearAccelSlider">linear acceleration sensitivity</label><br>
+                    <label class = "inputLabel" for="linearAccelSlider">G-Force simulation sensitivity</label><br>
                     <input type="range" id = "maAccelSlider" step = 1 value = 2 min = 1 max = 20>
-                    <label class = "inputLabel" for="maAccelSlider">motion smoothing</label><br>
+                    <label class = "inputLabel" for="maAccelSlider">G-Force motion smoothing</label><br>
                     <input type="range" id = "rawSlider" step = 0.001 value = 2 min = 0.001 max = 4>
-                    <label class = "inputLabel" for="rawSlider">pitch and roll sensitivity</label><br>
+                    <label class = "inputLabel" for="rawSlider">Pitch and roll simulation sensitivity</label><br>
                     <input type="range" id = "maRawSlider" step = 1 value = 8 min = 1 max = 20>
-                    <label class = "inputLabel" for="maRawSlider">motion smoothing</label><br>
+                    <label class = "inputLabel" for="maRawSlider">Pitch and roll motion smoothing</label><br>
                     <input type="checkbox" id="servosInvertX">
-                    <label class = "inputLabel" for="servosInvertX">invert servo rotation over x-axis?</label><br>
+                    <label class = "inputLabel" for="servosInvertX">Invert pitch rotation</label><br>
                     <input type="checkbox" id="servosInvertY">
-                    <label class = "inputLabel" for="servosInvertY">invert servo rotation over y axis?</label><br>
-                    <button  class = "button" id = "cueingApply">apply</button>
+                    <label class = "inputLabel" for="servosInvertY">Invert yaw rotation</label><br>
+                    <button  class = "button" id = "cueingApply">Apply</button>
                     <p> </p>
-                </div>
-                <div id="test" class="tabcontent">
-                    <h3 class = "label">Test</h3>
-                    <p>warning: this will move your simulator!</p>
-                    <input type="range" id = "pitchTestSlider" min = "0" max = "180">
-                    <label class = "inputLabel" for="pitchTestSlider">test pitch motion</label><br>
-                    <input type="range" id = "rollTestSlider" min = "0" max = "180">
-                    <label class = "inputLabel" for="rollTestSlider">test roll motion</label><br>
-                    <p> </p>
-                </div>            
+                </div>          
                 <div id="output" class="tabcontent">
                     <h3 class = "label">Output</h3>
                     <label class = "inputLabel" for="arduinoPort">Arduino port: </label>
                     <input value = "COM3" type="text" id = "arduinoPort"><br>
                     <input type="checkbox" id="linearAccelCheckbox">
-                    <label class = "inputLabel" for="linearAccelCheckbox"> use linear acceleration</label><br>
+                    <label class = "inputLabel" for="linearAccelCheckbox">  G-Force motion simulation</label><br>
                     <input type="checkbox" id="pitchAndRollCheckbox">
-                    <label class = "inputLabel" for="pitchAndRollCheckbox"> use pitch and roll</label><br>
-                    <button  class = "button" id = "outputApply">apply</button><br><br>
-                    <button  class = "button" id = "startMotion">start motion</button>
-                    <button  class = "button" id = "stopMotion">stop motion</button>
+                    <label class = "inputLabel" for="pitchAndRollCheckbox"> Pitch and roll motion simulation</label><br>
+                    <button  class = "button" id = "outputApply">Apply</button><br><br>
+                    <!-- <button  class = "button" id = "startMotion">Start motion</button>
+                    <button  class = "button" id = "stopMotion">Stop motion</button> -->
                     <p> </p>
                 </div>
+                <div id="test" class="tabcontent">
+                    <h3 class = "label">Test</h3>
+                    <p>WARNING: This will move your simulator platform if it is connected!</p>
+                    <input type="range" id = "pitchTestSlider" min = "0" max = "180">
+                    <label class = "inputLabel" for="pitchTestSlider">Test pitch motion</label><br>
+                    <input type="range" id = "rollTestSlider" min = "0" max = "180">
+                    <label class = "inputLabel" for="rollTestSlider">Test roll motion</label><br>
+                    <p> </p>
+                </div>  
             </div>
 
             <div class = "telemetryContainer">
@@ -112,13 +111,13 @@
             <div class = "threeSimulation pretty">
                 <!-- <h1>Simulation Motion</h1> -->
                 <canvas id = "simulation"></canvas>
-                <h1 id = "pitchAndRollText">Pitch and Roll Visualization</h1>
+                <h1 id = "pitchAndRollText">G-Force simulation</h1>
             </div>
 
             <div class = "threeReal pretty">
                 <!-- <h1>In-Game Motion</h1> -->
                 <canvas id = "inGame"></canvas>
-                <h1 id = "gForceText">G-Force Visualization</h1>
+                <h1 id = "gForceText">Pitch and roll simulation</h1>
             </div>
         </div>
     </div>
@@ -128,6 +127,5 @@
     <script type = "module" src="env2.js"></script>
     <script src = "./js/three.min.js"></script>
     <script src = "./js/threeorbit.js"></script>
-    <script src = "servos.js"></script>
   </body>
 </html>

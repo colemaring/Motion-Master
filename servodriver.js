@@ -1,66 +1,80 @@
-// const {Board, Servo} = require("johnny-five");
-// const {ipcMain } = require('electron')
-// const board = new Board({
-//   repl: false,
-//   port: "COM3",
-//   // timeout: 1
-// });
-// const controller = "PCA9685";
+const {Board, Servo} = require("johnny-five");
+const {ipcMain } = require('electron')
 
-// // ipcMain.on("pitchTestSlider", (event, value) => {
-// //   console.log(value)
-// // })
+let userPort, gForceMode, pitchAndRollMode = null;
 
-// // ipcMain.on("rollTestSlider", (event, value) => {
-// //   console.log(value)
-// // })
+ipcMain.on("output", (event, value) => {
+    userPort = value[0];
+    // console.log("COM3" === userPort)
+    gForceMode = value[1];
+    pitchAndRollMode = value[2];
 
-// board.on("ready", () => {
-//   console.log("Connected");
-//   let pitch, yaw, roll;
+    const board = new Board({
+        repl: false,
+        port: userPort,
+        // timeout: 1
+      });
+      
+      const controller = "PCA9685";
+      
+      
+      board.on("ready", () => {
+        console.log("Connected");
+        let pitch, yaw, roll;
+      
+        // Initialize the servo instance
+        const a = new Servo({
+          controller,
+          pin: 0,
+        });
+      
+        const b = new Servo({
+          controller,
+          range: [0, 180],
+          pin: 1,
+        });
+      
+        ipcMain.on('data-to-main', (event, data) => {
+           // data received from main process
+          pitch = data[3];
+          yaw = data[2]; 
+          roll = data[4];
+          xAccel = data[5];
+          yAccel = data[6];
+      
+      
+           if (gForceMode)
+           {
+              let pitchVal = xAccel * -400;
+              let rollVal = yAccel * -400;
+              b.to(pitchVal + rollVal + 110);
+              a.to(pitchVal + -1 * rollVal + 90);
+           }
+           else if (pitchAndRollMode)
+           {
+              let pitchVal = pitch * -400;
+              let rollVal = roll * -400;
+              b.to(pitchVal + rollVal + 110);
+              a.to(pitchVal + -1 * rollVal + 90);
+           }
+        });
 
-//   // Initialize the servo instance
-//   const a = new Servo({
-//     controller,
-//     pin: 0,
-//   });
+        ipcMain.on("pitchTestSlider", (event, value) => {
+            a.to(value);
+            b.to(-value + 180);
+          })
+          
+          ipcMain.on("rollTestSlider", (event, value) => {
+            a.to(value);
+            b.to(value);
+          })
+})
 
-//   const b = new Servo({
-//     controller,
-//     range: [0, 180],
-//     pin: 1,
-//   });
 
-//   // a.to(90);
-//   // b.to(90);
+// create new board connection when userport is changed, or when output ipc is triggered?
 
-//   ipcMain.on('data-to-main', (event, data) => {
-//      // data received from main process
-//      pitch = data[3];
-//      yaw = data[2]; 
-//      roll = data[4];
-//      xAccel = data[5];
-// 	   yAccel = data[6];
-//      //console.log(roll + " + " + pitch);
-//      //console.log(xAccel + " + " + yAccel);
-//      let pitchVal = xAccel * -400;
-//      let yawVal = yAccel * -400;
-//      b.to(pitchVal + yawVal + 110);
-//      a.to(pitchVal + -1 * yawVal + 90);
-//     //  a.to(90);
-//     //  b.to(90);
-//   });
 
-//   ipcMain.on("pitchTestSlider", (event, value) => {
-//     a.to(value);
-//   })
+
+
   
-//   ipcMain.on("rollTestSlider", (event, value) => {
-//     b.to(value);
-//   })
-
-
-//   // a.sweep();
-//   // b.to(0);
-  
-// });
+});
