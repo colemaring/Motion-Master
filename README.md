@@ -26,16 +26,14 @@ if errors with rebuild, reinstall nodejs and check choco install<br />
 
 TODO:<br />
 fix reestablishing borad connection <br />
+fix pitch and roll motion simulation <br />
+green text in output tab when connected to board <br />
+add dimensional lines in theejs scenes <br />
 refactor and format<br />
 fix css styling <br />
-
-
-Still a WIP
+support more games <br />
 
 V1
-right servo hitting max angle, servo base redesign is needed.
-lots of play in uv joints, design tighter tolerances, can also shrink.
-servos themselves moving around in base. redesign with tigher tolerances and consider glue.
 
 https://github.com/colemaring/Motion-Master/assets/65455664/49d2157e-1708-4f01-8d94-46e70c5ab0cf
 
