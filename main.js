@@ -58,33 +58,33 @@ app.on('window-all-closed', () => {
 // code. You can also put them in separate files and require them here.
 
 const {Board, Servo } = require("johnny-five");
-// const {app, BrowserWindow} = require('electron');
 const {ipcMain } = require('electron')
-// const path = require('path')
 
-let userPort, gForceMode, pitchAndRollMode = null;
+let userPort, gForceMode, pitchAndRollMode, offset1, offset2 = null;
 
-
-ipcMain.on("output2", (event, value) => {
+// values to use in our servo driver
+ipcMain.on("outputSettings", (event, value) => {
   gForceMode = value[0];
   pitchAndRollMode = value[1];
+  offset1 = value[2];
+  offset2 = value[3];
 })
 
+// connect to the board using com port
 ipcMain.on("output", (event, value) => {
     userPort = value;
-    // console.log("COM3" === userPort)
 
     const board = new Board({
         repl: false,
         port: userPort,
         // timeout: 1
-      });
+    });
       
-      const controller = "PCA9685";
+    const controller = "PCA9685";
   
-      
-      board.on("ready", () => {
+    board.on("ready", () => {
         console.log("Connected");
+        // update html connected text
         mainWindow.webContents.send('update-html-text', ["Connected", true]);
         let pitch, yaw, roll;
       
@@ -96,52 +96,50 @@ ipcMain.on("output", (event, value) => {
       
         const b = new Servo({
           controller,
-          range: [0, 180],
           pin: 1,
         });
       
         ipcMain.on('data-to-main', (event, data) => {
            // data received from main process
-          pitch = data[3];
-          yaw = data[2]; 
-          roll = data[4];
-          xAccel = data[5];
-          yAccel = data[6];
+            pitch = data[3];
+            yaw = data[2]; 
+            roll = data[4];
+            xAccel = data[5];
+            yAccel = data[6];
       
-      
-           if (gForceMode)
-           {
+            if (gForceMode)
+            {
               // arbitrary scalars dont really matter here
               let pitchVal = xAccel * -400;
               let rollVal = yAccel * -400;
-              b.to(pitchVal + rollVal + 110);
-              a.to(pitchVal + -1 * rollVal + 90);
-           }
-           else if (pitchAndRollMode)
-           { 
-              // arbitrary scalers used to have proper pitch / roll ratio
+              b.to(pitchVal + rollVal + parseInt(offset1));
+              a.to(pitchVal + -1 * rollVal + parseInt(offset2));
+            }
+            else if (pitchAndRollMode)
+            { 
+              // arbitrary scalars 
               let pitchVal = pitch * -10;
               let rollVal = roll * -10;
-              b.to(pitchVal*-1 + rollVal + 110);
-              a.to(pitchVal + rollVal + 90);
-           }
+              b.to(pitchVal*-1 + rollVal + parseInt(offset1));
+              a.to(pitchVal + rollVal + parseInt(offset2));
+            }
         });
 
+        // does not work when an output mode is toggled
         ipcMain.on("pitchTestSlider", (event, value) => {
             a.to(value);
             b.to(-value + 180);
-          })
+        })
           
-          ipcMain.on("rollTestSlider", (event, value) => {
+        ipcMain.on("rollTestSlider", (event, value) => {
             a.to(value);
             b.to(value);
-          })
-})
+        })
+    })
 
-board.on("exit", () => {
-  mainWindow.webContents.send('update-html-text',  ["Disconnected", true]);
-});
-
-
+    // update html text 
+    board.on("exit", () => {
+    mainWindow.webContents.send('update-html-text',  ["Disconnected", true]);
+    });
 });
 

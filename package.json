@@ -1,20 +1,17 @@
 {
-  "name": "motion",
-  "version": "1.0.0",
-  "description": "2dof motion software",
+  "name": "motionv4",
+  "version": "4.0.0",
+  "description": "2dof motion simulator software",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Colton Maring",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "electron": "^24.2.0",
     "johnny-five": "^2.1.0",
-    "three": "^0.151.3"
-  },
-  "devDependencies": {
-    "@electron/rebuild": "^3.2.12"
+    "three": "^0.152.2"
   }
 }

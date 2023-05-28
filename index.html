@@ -1,30 +1,27 @@
-<!--index.html-->
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>Cole Maring</title>
+    <title>Motion Master</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class = "content">
         <div class = "leftContainer">
-            <div class = "tabContainer pretty">
+            <div class = "tabContainer prettyContainer">
                 <div class="tab">
                     <button class="tablinks" id = "inputButton">Input</button>
-                    <button class="tablinks" id = "cueingButton">Motion Control</button>
+                    <button class="tablinks" id = "motionControlButton">Motion Control</button>
                     <button class="tablinks" id = "outputButton">Output</button>
                     <button class="tablinks" id = "testButton">Test</button>
                 </div>
                 
-                <div id="input" class="tabcontent">
-                    <h3 class = "label">Input</h3>
+                <div id = "input" class="tabcontent">
+                    <h3 class = "headerLabel">Input</h3>
                     <label class = "inputLabel" for="gameSelector">Game: </label>
                     <select name="game" id="gameSelector">
                         <option value="FH5">FH5</option>
@@ -33,10 +30,9 @@
                     <input value = "5300" type="text" id = "portSelector"><br>
                     <button class = "button" id = "inputApply">Apply</button>
                     <h3 id = "connectionStatus">not connected to game</h3>
-                    <p> </p>
                 </div>
-                <div id="cueing" class="tabcontent">
-                    <h3 class = "label">Motion Control</h3>
+                <div id = "motionControl" class="tabcontent">
+                    <h3 class = "headerLabel">Motion Control</h3>
                     <input type="range" id = "linearAccelSlider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
                     <label class = "inputLabel" for="linearAccelSlider">G-Force simulation sensitivity</label><br>
                     <input type="range" id = "maAccelSlider" step = 1 value = 2 min = 1 max = 20>
@@ -49,11 +45,10 @@
                     <label class = "inputLabel" for="servosInvertX">Invert pitch rotation</label><br>
                     <input type="checkbox" id="servosInvertY">
                     <label class = "inputLabel" for="servosInvertY">Invert yaw rotation</label><br>
-                    <button  class = "button" id = "cueingApply">Apply</button>
-                    <p> </p>
+                    <button  class = "button" id = "motionControlApply">Apply</button>
                 </div>          
-                <div id="output" class="tabcontent">
-                    <h3 class = "label">Output</h3>
+                <div id = "output" class="tabcontent">
+                    <h3 class = "headerLabel">Output</h3>
                     <label class = "inputLabel" for="arduinoPort">Arduino port: </label>
                     <input value = "COM3" type="text" id = "arduinoPort"><br>
                     <button  class = "button" id = "outputApply">Apply</button><br><br>
@@ -61,23 +56,25 @@
                     <label class = "inputLabel" for="linearAccelCheckbox">  G-Force motion simulation</label><br>
                     <input type="checkbox" id="pitchAndRollCheckbox">
                     <label class = "inputLabel" for="pitchAndRollCheckbox"> Pitch and roll motion simulation</label><br>
-                    <button  class = "button" id = "outputApply2" disabled>Apply</button><br><br>
+                    <label class = "inputLabel" for="servo1OffsetText">Servo 1 offset angle: </label>
+                    <input value = "110" type="text" id = "servo1Offset"><br>
+                    <label class = "inputLabel" for="servo2OffsetText">Servo 2 offset angle: </label>
+                    <input value = "90" type="text" id = "servo2Offset"><br>
+                    <button  class = "button" id = "outputApplySettings" disabled>Apply</button><br>
                     <p id = "arduinoConnected">Not connected</p>
-                    <p> </p>
                 </div>
-                <div id="test" class="tabcontent">
-                    <h3 class = "label">Test</h3>
+                <div id = "test" class="tabcontent">
+                    <h3 class = "headerLabel">Test</h3>
                     <p>WARNING: This will move your simulator platform if it is connected!</p>
                     <input type="range" id = "pitchTestSlider" min = "0" max = "180">
                     <label class = "inputLabel" for="pitchTestSlider">Test pitch motion</label><br>
                     <input type="range" id = "rollTestSlider" min = "0" max = "180">
                     <label class = "inputLabel" for="rollTestSlider">Test roll motion</label><br>
-                    <p> </p>
                 </div>  
             </div>
 
-            <div class = "telemetryContainer">
-                <div class = "tractionCircleContainer pretty square">
+            <div id = "telemetryContainer">
+                <div class = "tractionCircleContainer prettyContainer square">
                     <div id = "gForceTextContainer">
                         <h1>Gs</h1>
                         <h3 id = "gForce">0</h3>
@@ -86,45 +83,43 @@
                     <canvas id="tractionCircle" width="280" height="280"></canvas>
                 </div>
     
-                <div class = "telemetryData pretty square" id = "PitchYawRollRpmContainer">
+                <div class = "telemetryData prettyContainer square" id = "PitchYawRollRpmContainer">
                     <div id = "pitch">
                         <h1 class = "pitchYawRollRpmFont">Pitch</h1>
-                        <h3  class = "centered" id  = "pitchValue">0</h3>
+                        <h3 class = "centered" id = "pitchValue">0</h3>
                     </div>
                     <div id = "yaw">
                         <h1 class = "pitchYawRollRpmFont">Yaw</h1>
-                        <h3  class = "centered" id  = "yawValue">0</h3>
+                        <h3 class = "centered" id = "yawValue">0</h3>
                     </div>
                     <div id = "roll">
                         <h1 class = "pitchYawRollRpmFont">Roll</h1>
-                        <h3  class = "centered" id  = "rollValue">0</h3>
+                        <h3 class = "centered" id = "rollValue">0</h3>
                     </div>
                     <div id = "rpm">  
                         <h1 class = "pitchYawRollRpmFont">Rpm</h1>
-                        <h3 class = "centered" id  = "rpmValue">0</h3>
+                        <h3 class = "centered" id = "rpmValue">0</h3>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class = "rightContainer">
-            <div class = "threeSimulation pretty">
-                <!-- <h1>Simulation Motion</h1> -->
-                <canvas id = "simulation"></canvas>
-                <h1 id = "pitchAndRollText">G-Force simulation</h1>
+            <div class = "threeReal prettyContainer">
+                <canvas id = "rawCanvas" class = "scene"></canvas>
+                <h1 id = "gForceText">G-Force simulation</h1>
             </div>
 
-            <div class = "threeReal pretty">
-                <!-- <h1>In-Game Motion</h1> -->
-                <canvas id = "inGame"></canvas>
-                <h1 id = "gForceText">Pitch and roll simulation</h1>
+            <div class = "threeSim prettyContainer">
+                <canvas id = "simCanvas" class = "scene"></canvas>
+                <h1 id = "pitchAndRollText">Pitch and roll simulation</h1>
             </div>
         </div>
+
     </div>
     <script src="tabmenu.js"></script>
     <script src="telemetry.js"></script>
-    <script type = "module" src="env.js"></script>
-    <script type = "module" src="env2.js"></script>
+    <script type = "module" src="three.js"></script>
     <script src = "./js/three.min.js"></script>
     <script src = "./js/threeorbit.js"></script>
   </body>

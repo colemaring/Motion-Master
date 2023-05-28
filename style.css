@@ -9,42 +9,8 @@ html {
     font-size: 12px;
 }
 
-.pitchYawRollRpmFont{
-    font-size: xx-large;
-    width: 29%;
-    margin: 30px;
-}
-
-#PitchYawRollRpmContainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-}
-
-#pitchAndRollText{
-    color:white;
-    position: absolute; 
-    top: 380px;
-    margin-left: 10px;
-}
-
-#gForceText{
-    color:white;
-    position: absolute; 
-    top: 30px;
-    margin-left: 10px;
-}
-
-.centered{
-    text-align: center;
-    font-size: x-larger;
-}
-
 .content {
     display: flex;
-    /* background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); */
     position: absolute;
     top: 0px;
     right: 0px;
@@ -67,6 +33,50 @@ html {
 .tabContainer {
     height: 50%;
     padding: 1rem;
+}
+
+.prettyContainer {
+    box-shadow: 0 0px 6px rgb(0 0 0 / 0.4);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.pretty {
+    box-shadow: 0 0px 6px rgb(0 0 0 / 0.4);
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+.pitchYawRollRpmFont {
+    font-size: xx-large;
+    width: 29%;
+    margin: 30px;
+}
+
+#PitchYawRollRpmContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#gForceText {
+    color:white;
+    position: absolute; 
+    top: 380px;
+    margin-left: 10px;
+}
+
+#pitchAndRollText {
+    color:white;
+    position: absolute; 
+    top: 30px;
+    margin-left: 10px;
+}
+
+.centered {
+    text-align: center;
+    font-size: x-larger;
 }
 
 .tab {
@@ -101,33 +111,33 @@ html {
     border-top: none;
 }
 
-.telemetryContainer {
+#telemetryContainer {
     display: flex;
     height: 50%;
     width: 100%;
 }
 
-#connectionStatus{
+#connectionStatus {
     margin-top: 10px;
     color: red;
 }
 
-select, input[type=text], input[type=range]{
+select, input[type=text], input[type=range] {
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 3px;
 }
 
-.inputLabel{
+.inputLabel {
     font-size: 16px;
 }
 
-.label{
+.headerLabel {
     margin-bottom: 10px;
     font-size: 16px;
 }
 
-.button{
+.button {
     font-size: 16px;
     padding: 5px;
     padding-left: 10px;
@@ -138,7 +148,7 @@ select, input[type=text], input[type=range]{
     background-color: rgb(216, 216, 216);
 }
 
-.button:hover{
+.button:hover {
     cursor: pointer;
     background-color: rgb(179, 179, 179);
 }
@@ -148,12 +158,12 @@ select, input[type=text], input[type=range]{
     text-align: center;
 }
 
-#tractionCircle{
+#tractionCircle {
     width: 280px;
     height: 280px;
 }
 
-#gForceTextContainer{
+#gForceTextContainer {
     z-index: 1;
     position: absolute;
 }
@@ -168,32 +178,22 @@ select, input[type=text], input[type=range]{
     width: 50%;
 }
 
-.pretty {
-    box-shadow: 0 0px 6px rgb(0 0 0 / 0.4);
-    /* border: 1px solid black; */
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-}
-
-.threeSimulation{
+.threeReal {
     height: 48.5%;
     width: 100%;
-    /* margin-bottom: 1rem; */
 }
 
-.threeReal{
+.threeSim {
     height: 48.5%;
     width: 100%; 
     margin-top: 2rem;
 }
 
-#simulation{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
+#outputApplySettings{
+    margin-top: 0px !important;
 }
 
-#inGame{
+.scene {
     width: 100%;
     height: 100%;
     border-radius: 10px;
