@@ -26,9 +26,7 @@ if errors with rebuild, reinstall nodejs and check choco install<br />
 
 TODO:<br />
 fix test when a output mode selected <br />
-add offsets option for servos <br />
-refactor and format<br />
-fix css styling <br />
+styling <br />
 support more games <br />
 add data persistance <br />
 
