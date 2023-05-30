@@ -1,36 +1,51 @@
-# Motion-Master
-View and control your 2DOF motion simulator in a lightweight application.<br />
-![motion](https://user-images.githubusercontent.com/65455664/229327411-935b650d-f0bb-4adc-8731-e0b37e9c3afe.gif)
+# Motion Master
 
-Install:<br />
-git clone https://github.com/colemaring/Motion-Master (clone repo)<br />
-npm install (install dependencies)<br />
-.\node_modules\.bin\electron-rebuild.cmd or $(npm bin)/electron-rebuild (rebuilds johnny-five to match electron node runtime)<br />
-npm run start<br />
+Motion Master is an application to control a 2DOF motion simulator and view its corresponding telemetry.
+Insert a cool gif here
 
-Configure:<br />
-flash standardFirmataPlus onto arduino uno<br />
-connect arduino to pca9685 as follows<br />
-  A5 -> SCL<br />
-  A4 -> SDA<br />
-  GND -> GND<br />
-  5V -> VCC<br />
-servos to pins 0 and 1 on pca9685<br />
+## Installation
 
-Settings:<br />
-settings here
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
-Notes for later:<br />
-enable udp on forza 5 and match port<br />
-if errors with rebuild, reinstall nodejs and check choco install<br />
+```bash
+git clone https://github.com/colemaring/Motion-Master && cd Motion-Master
 
-TODO:<br />
-fix test when a output mode selected <br />
-styling <br />
-support more games <br />
-add data persistance <br />
+npm install
 
-V1
+npm run start
+```
 
-https://github.com/colemaring/Motion-Master/assets/65455664/49d2157e-1708-4f01-8d94-46e70c5ab0cf
+## Usage
 
+### Arduino Setup:
+Open Arduino IDE -> Select Board -> File -> Examples -> Firmata -> StandardFirmataPlus. Verify and then upload to your Arduino.   
+
+To connect your Arduino to a pca9685:  
+A5 -> SCL  
+A4 -> SDA  
+GND -> GND  
+5V -> VCC  
+Servos 1 to pin 0 and servo 2 to pin 1 on pca9685  
+
+It is recommended to power your pca9685 externally via a 5v -ish power supply.
+
+### Input: 
+Here is where you can establish a connection to the game. In order to establish a successful connection between your game and Motion Master, you must first find the option in your game's settings to open and specify a UDP port. Once you select your game and UDP port in motion master, click Apply and you should see the text below change if Motion Master is connected to your game.
+### Motion Control: 
+This is where you can change the sensitivity, motion smoothing, and axis direction for your motion simulator. Changes here will also reflect on the 3d cars on the right side. Higher sensitivity will cause a jittery motion, due to minor details being exaggerated, whereas a high motion smoothing will cause details to mellow out. Inverting the pitch/roll rotation may be needed depending on how your motion simulator was built.
+### Output: 
+Here is where you can connect Motion Master to your Arduino motion simulator. Specify the communications port your Arduino is connected to and click apply. Upon a successful connection, you should see the text at the bottom change to notify you of a successful connection. Once you are connected to your Arduino motion simulator, you will now be able to choose which type of motion cueing you would like to use, aswell as set the servo offset angles. To find the correct servo offset angles, start with 90 and move your car to a flat surface. If the offset is correct, both servo arms should be parallel to each other, and perpendicular to the ground/surface it is sitting on. Click apply to apply your settings.
+### Test: 
+Here you can test the minimum and maximum mobility of your motion simulator. You must be connected via the Output tab in order for this to work. The sliders are on a range from 0 to 180. Inverted axis assignments will NOT reflect here.
+
+## Known Errors/Bugs:
+When an output mode, such as G-Force is selected, the test sliders do not work. servos are receiving 0s and slider vals and fighting.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
