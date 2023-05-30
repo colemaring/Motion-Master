@@ -30,16 +30,16 @@ Servos 1 to pin 0 and servo 2 to pin 1 on pca9685
 It is recommended to power your pca9685 externally via a 5v -ish power supply.
 
 ### Input: 
-![162d9000259a3d451d5de32b1faf1b76](https://github.com/colemaring/Motion-Master/assets/65455664/81a3a474-9fce-4895-9aa1-25f06c6ff848)
+![162d9000259a3d451d5de32b1faf1b76](https://github.com/colemaring/Motion-Master/assets/65455664/81a3a474-9fce-4895-9aa1-25f06c6ff848)   
 Here is where you can establish a connection to the game. In order to establish a successful connection between your game and Motion Master, you must first find the option in your game's settings to open and specify a UDP port. Once you select your game and UDP port in motion master, click Apply and you should see the text below change if Motion Master is connected to your game.
 ### Motion Control: 
-![c3fcf073a412d86745b3f27987d59cec](https://github.com/colemaring/Motion-Master/assets/65455664/66f68132-895f-4392-a37c-552dd001816c)
+![c3fcf073a412d86745b3f27987d59cec](https://github.com/colemaring/Motion-Master/assets/65455664/66f68132-895f-4392-a37c-552dd001816c)   
 This is where you can change the sensitivity, motion smoothing, and axis direction for your motion simulator. Changes here will also reflect on the 3d cars on the right side. Higher sensitivity will cause a jittery motion, due to minor details being exaggerated, whereas a high motion smoothing will cause details to mellow out. Inverting the pitch/roll rotation may be needed depending on how your motion simulator was built.
 ### Output: 
-![3e569243480e0b45daae3a3019ebdac3](https://github.com/colemaring/Motion-Master/assets/65455664/1f61fdcb-4191-4bd8-97cb-2bf4bb02bfee)
+![3e569243480e0b45daae3a3019ebdac3](https://github.com/colemaring/Motion-Master/assets/65455664/1f61fdcb-4191-4bd8-97cb-2bf4bb02bfee)   
 Here is where you can connect Motion Master to your Arduino motion simulator. Specify the communications port your Arduino is connected to and click apply. Upon a successful connection, you should see the text at the bottom change to notify you of a successful connection. Once you are connected to your Arduino motion simulator, you will now be able to choose which type of motion cueing you would like to use, aswell as set the servo offset angles. To find the correct servo offset angles, start with 90 and move your car to a flat surface. If the offset is correct, both servo arms should be parallel to each other, and perpendicular to the ground/surface it is sitting on. Click apply to apply your settings.
 ### Test:
-![83a7e46f75cf7d6f8c095fab1cf40436](https://github.com/colemaring/Motion-Master/assets/65455664/b52dacdd-b0f5-4f2d-8813-969038a976cf)
+![83a7e46f75cf7d6f8c095fab1cf40436](https://github.com/colemaring/Motion-Master/assets/65455664/b52dacdd-b0f5-4f2d-8813-969038a976cf)   
 Here you can test the minimum and maximum mobility of your motion simulator. You must be connected via the Output tab in order for this to work. The sliders are on a range from 0 to 180. Inverted axis assignments will NOT reflect here.
 
 ## Known Errors/Bugs:
