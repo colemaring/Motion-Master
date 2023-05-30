@@ -5,7 +5,6 @@ Insert a cool gif here
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
 git clone https://github.com/colemaring/Motion-Master && cd Motion-Master
@@ -41,6 +40,10 @@ Here is where you can connect Motion Master to your Arduino motion simulator. Sp
 ### Test:
 ![83a7e46f75cf7d6f8c095fab1cf40436](https://github.com/colemaring/Motion-Master/assets/65455664/b52dacdd-b0f5-4f2d-8813-969038a976cf)   
 Here you can test the minimum and maximum mobility of your motion simulator. You must be connected via the Output tab in order for this to work. The sliders are on a range from 0 to 180. Inverted axis assignments will NOT reflect here.
+
+## Hardware
+
+## Development
 
 ## Known Errors/Bugs:
 When an output mode, such as G-Force is selected, the test sliders do not work. servos are receiving 0s and slider vals and fighting.
