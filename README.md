@@ -1,4 +1,5 @@
-# Motion Master
+# Motion Master![icon](https://github.com/colemaring/Motion-Master/assets/65455664/e76f3c99-0480-45ce-b72e-84f89182f86d)
+
 
 Motion Master is an application to control a 2DOF motion simulator and view its corresponding telemetry.
 Insert a cool gif here
