@@ -44,7 +44,7 @@
                     <input type="checkbox" id="servosInvertX">
                     <label class = "inputLabel" for="servosInvertX">Invert pitch rotation</label><br>
                     <input type="checkbox" id="servosInvertY">
-                    <label class = "inputLabel" for="servosInvertY">Invert yaw rotation</label><br>
+                    <label class = "inputLabel" for="servosInvertY">Invert roll rotation</label><br>
                     <button  class = "button" id = "motionControlApply">Apply</button>
                 </div>          
                 <div id = "output" class="tabcontent">
@@ -61,7 +61,7 @@
                     <label class = "inputLabel" for="servo2OffsetText">Servo 2 offset angle: </label>
                     <input value = "90" type="text" id = "servo2Offset"><br>
                     <button  class = "button" id = "outputApplySettings" disabled>Apply</button><br>
-                    <p id = "arduinoConnected">Not connected</p>
+                    <h3 id = "arduinoConnected">not connected to arduino</h3>
                 </div>
                 <div id = "test" class="tabcontent">
                     <h3 class = "headerLabel">Test</h3>
@@ -86,19 +86,19 @@
                 <div class = "telemetryData prettyContainer square" id = "PitchYawRollRpmContainer">
                     <div id = "pitch">
                         <h1 class = "pitchYawRollRpmFont">Pitch</h1>
-                        <h3 class = "centered" id = "pitchValue">0</h3>
+                        <h1 class = "centered" id = "pitchValue">0</h1>
                     </div>
                     <div id = "yaw">
                         <h1 class = "pitchYawRollRpmFont">Yaw</h1>
-                        <h3 class = "centered" id = "yawValue">0</h3>
+                        <h1 class = "centered" id = "yawValue">0</h1>
                     </div>
                     <div id = "roll">
                         <h1 class = "pitchYawRollRpmFont">Roll</h1>
-                        <h3 class = "centered" id = "rollValue">0</h3>
+                        <h1 class = "centered" id = "rollValue">0</h1>
                     </div>
                     <div id = "rpm">  
                         <h1 class = "pitchYawRollRpmFont">Rpm</h1>
-                        <h3 class = "centered" id = "rpmValue">0</h3>
+                        <h1 class = "centered" id = "rpmValue">0</h1>
                     </div>
                 </div>
             </div>
@@ -117,10 +117,10 @@
         </div>
 
     </div>
-    <script src="tabmenu.js"></script>
-    <script src="telemetry.js"></script>
-    <script type = "module" src="three.js"></script>
-    <script src = "./js/three.min.js"></script>
-    <script src = "./js/threeorbit.js"></script>
+    <script src="renderer/tabmenu.js"></script>
+    <script src="renderer/telemetry.js"></script>
+    <script type = "module" src="renderer/three.js"></script>
+    <script src = "./threecdn/three.min.js"></script>
+    <script src = "./threecdn/threeorbit.js"></script>
   </body>
 </html>
