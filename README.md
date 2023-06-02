@@ -2,8 +2,8 @@
 
 
 
-Motion Master is an application to control a 2DOF motion simulator and view its corresponding telemetry.
-Insert a cool gif here
+Motion Master is an application to control a 2DOF motion simulator and view its corresponding telemetry.   
+![](https://github.com/colemaring/Motion-Master/blob/main/renderer/video.gif)
 
 ## Installation
 
