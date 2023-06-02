@@ -2,7 +2,7 @@
 
 
 
-Motion Master is an application to control a 2DOF motion simulator and view its corresponding telemetry.   
+Motion Master is an application to control a 2DOF Arduino motion simulator and view its corresponding telemetry.   
 <br>
 ![](https://github.com/colemaring/Motion-Master/blob/main/renderer/video.gif)
 
