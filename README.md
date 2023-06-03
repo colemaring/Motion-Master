@@ -31,7 +31,7 @@ This is where you can change the sensitivity, motion smoothing, and axis directi
 Here is where you can connect Motion Master to your Arduino motion simulator ([view Arduino setup](#arduino-setup)). Specify the communications port your Arduino is connected to and click apply. Upon a successful connection, you should see the text at the bottom change to notify you of a successful connection. Once you are connected to your Arduino motion simulator, you will now be able to choose which type of motion cueing you would like to use, aswell as set the servo offset angles. To find the correct servo offset angles, start with 90 and move your car to a flat surface. If the offset is correct, both servo arms should be parallel to each other and parallel to the ground/surface it is sitting on. Click apply to apply your settings.
 ### Test:
 ![83a7e46f75cf7d6f8c095fab1cf40436](https://github.com/colemaring/Motion-Master/assets/65455664/b52dacdd-b0f5-4f2d-8813-969038a976cf)   
-Here you can test the minimum and maximum mobility of your motion simulator. You must be connected via the Output tab in order for this to work. The sliders are on a range from 0 to 180. Inverted axis assignments will NOT reflect here.
+Here you can test the mobility of your motion simulator. You must be connected via the Output tab in order for this to work. The sliders are on a range from 0 to 180. Inverted axis assignments will NOT reflect here.
 ### Arduino Setup:
 Open Arduino IDE -> Select Board -> File -> Examples -> Firmata -> StandardFirmataPlus.   
 Verify and then upload to your Arduino.   
