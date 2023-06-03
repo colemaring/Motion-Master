@@ -71,7 +71,7 @@ I encountered many issues when developing this project. Most of the walls I hit 
 My next goal with this project is to implement a slider that lets the user blend pitch and roll motion and lateral x and y acceleration motion. Mixing these two sets of motion would be very interesting, as being able to simulate lateral G's as well as refined details about how the car is handling would provide for a more immersive motion simulator experience.
 
 ## Known Errors/Bugs:
-When an output mode such as G-Force is selected, the test sliders do not work. Servos are receiving 0s and slider vals are fighting.
+When an output mode such as G-Force is selected, the test sliders do not work. Servos are receiving 0s and slider values are clashing.
 
 ## License
 
