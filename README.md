@@ -73,6 +73,10 @@ My next goal with this project is to implement a slider that lets the user blend
 ## Known Errors/Bugs:
 When an output mode such as G-Force is selected, the test sliders do not work. Servos are receiving 0s and slider values are clashing.
 
+## Screenshot:
+![918e3e6831111241204f79dbe968ac309](https://github.com/colemaring/Motion-Master/assets/65455664/8e4b60fb-7ddd-461e-bd36-b671f894e61b)
+
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
