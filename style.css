@@ -49,18 +49,11 @@ html {
 }
 
 .pitchYawRollRpmFont {
-    font-size: xx-large;
-    width: 29%;
-    margin-top: 40px;
-    margin-bottom: 0px;
-    margin-left: 30px;
-    margin-right: 30px;
+    font-size: x-large;
 }
 
 #PitchYawRollRpmContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+
 }
 
 #gForceText {

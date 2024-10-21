@@ -1,0 +1,23 @@
+incorporate yaw into p,y,r mode?
+ - yaw angle is difference from previous angle?
+ - what would that even look like?
+
+implement gforce mode
+
+implement surge, heave, sway mode
+ - needs new checkmark and sliders
+
+combine the modes?
+
+add more data points to dash, parse UDP more
+ - throttle, brake, zAccel
+
+remove magic constants
+
+fix one actuator whos position is offset, i think B
+
+add more data to dashboard, heave sway surge lateral Gs and Z Gs?
+
+add more data to data square?
+
+print car or something for top, create new video, upload code, and screenshots
