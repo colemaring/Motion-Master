@@ -13,10 +13,13 @@ document.getElementById("inputApply").addEventListener("click", function () {
   ipcRenderer.send("input", input);
 });
 
-// if motionControl apply button clicked, send las, ms, prs, and ms2 values through ipc renderer as "motionControl"
+// if motionControl apply button clicked, send values through ipc renderer as "motionControl"
 let motionControl = [
   document.getElementById("motion_sensitivity_slider").value,
   document.getElementById("motion_smoothing_slider").value,
+  document.getElementById("lateral_only_mode").checked,
+  document.getElementById("linearAccelCheckbox").checked,
+  document.getElementById("pitchAndRollCheckbox").checked,
 ];
 document
   .getElementById("motionControlApply")
@@ -24,6 +27,9 @@ document
     motionControl = [
       document.getElementById("motion_sensitivity_slider").value,
       document.getElementById("motion_smoothing_slider").value,
+      document.getElementById("lateral_only_mode").checked,
+      document.getElementById("linearAccelCheckbox").checked,
+      document.getElementById("pitchAndRollCheckbox").checked,
     ];
   });
 document
@@ -42,19 +48,15 @@ document.getElementById("outputApply").addEventListener("click", function () {
 });
 
 let outputSettings = [
-  document.getElementById("linearAccelCheckbox").checked,
-  document.getElementById("pitchAndRollCheckbox").checked,
-  document.getElementById("servo1Offset").value,
-  document.getElementById("servo2Offset").value,
+  document.getElementById("servoMinAngle").value,
+  document.getElementById("servoMaxAngle").value,
 ];
 document
   .getElementById("outputApplySettings")
   .addEventListener("click", function () {
     outputSettings = [
-      document.getElementById("linearAccelCheckbox").checked,
-      document.getElementById("pitchAndRollCheckbox").checked,
-      document.getElementById("servo1Offset").value,
-      document.getElementById("servo2Offset").value,
+      document.getElementById("servoMinAngle").value,
+      document.getElementById("servoMaxAngle").value,
     ];
   });
 document

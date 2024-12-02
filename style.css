@@ -56,6 +56,72 @@ html {
 
 }
 
+/* Add this CSS to style.css */
+.overlayText {
+    position: absolute;
+    color: black;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  #overlayTextContainer {
+    position: absolute;
+    top: 100px;
+    left: 740px;
+    z-index: 9999;
+    width: 100px;
+  }
+
+  #heaveText{
+    position: absolute;
+    top: 30px;
+    left: 0px;
+  }
+  #swayText{
+    position: absolute;
+    top: 45px;
+    left: 0px;
+  }
+#surgeText{
+    position: absolute;
+    top: 60px;
+    left: 0px;
+}
+
+  #xAccelText{
+    position: absolute;
+    top: 220px;
+    left: 0px;
+  }
+  #yAccelText{
+    position: absolute;
+    top: 235px;
+    left: 0px;
+  }
+#zAccelText{
+    position: absolute;
+    top: 250px;
+    left: 0px;
+}
+
+  #pitchText{
+    position: absolute;
+    top: 420px;
+    left: 0px;
+  }
+
+  #rollText{
+    position: absolute;
+    top: 435px;
+    left: 0px;
+  }
+
+  #yawText{
+    position: absolute;
+    top: 450px;
+    left: 0px;
+  }
+
 #gForceText {
     /* color:white; */
     position: absolute; 
@@ -193,4 +259,19 @@ select, input[type=text], input[type=range] {
     width: 100%;
     height: 100%;
     border-radius: 10px;
+}
+
+/* Add CSS Grid for telemetry data */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

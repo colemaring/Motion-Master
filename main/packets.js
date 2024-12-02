@@ -5,12 +5,8 @@ const dgram = require("dgram");
 let server = dgram.createSocket("udp4");
 let game,
   port,
-  linearAccelValue,
-  maAccelValue,
-  rawValue,
-  maRawValue = null;
-let invertPitch,
-  invertRoll = 1;
+  sensitivity,
+  smoothing = null;
 
 // when apply button clicked on input tab
 ipcMain.on("input", (event, input) => {
@@ -35,15 +31,8 @@ ipcMain.on("input", (event, input) => {
 
 // when apply button clicked on motionControl tab
 ipcMain.on("motionControl", (event, motionControl) => {
-  linearAccelValue = motionControl[0];
-  maAccelValue = motionControl[1];
-  rawValue = motionControl[2];
-  maRawValue = motionControl[3];
-
-  if (motionControl[4]) invertPitch = -1;
-  else invertPitch = 1;
-  if (motionControl[5]) invertRoll = -1;
-  else invertRoll = 1;
+  sensitivity = motionControl[0];
+  smoothing = motionControl[1];
 });
 
 // does this have to exist here? or can it be deleted
@@ -60,7 +49,8 @@ function handleMessage(msg) {
     throttle,
     brake,
     yAccel,
-    roll = null;
+    roll,
+    maxRPM = null;
 
   // game-specific UDP parsing
   // https://medium.com/@makvoid/building-a-digital-dashboard-for-forza-using-python-62a0358cb43b
@@ -68,36 +58,28 @@ function handleMessage(msg) {
   if (game === "FH5") {
     rpm = Math.floor(Buffer.from(msg.slice(16, 20)).readFloatLE() * 100) / 100;
     xAccel =
-      (invertRoll *
-        Math.floor(Buffer.from(msg.slice(20, 24)).readFloatLE() * 100)) /
-      100;
+      Math.floor(Buffer.from(msg.slice(20, 24)).readFloatLE() * 100) / 100;
     yAccel =
-      (invertRoll *
-        Math.floor(Buffer.from(msg.slice(24, 28)).readFloatLE() * 100)) /
-      100;
+      Math.floor(Buffer.from(msg.slice(24, 28)).readFloatLE() * 100) / 100;
     zAccel =
-      (invertPitch *
-        Math.floor(Buffer.from(msg.slice(28, 32)).readFloatLE() * 100)) /
-      100;
+      Math.floor(Buffer.from(msg.slice(28, 32)).readFloatLE() * 100) / 100;
     yaw =
       Math.floor(
         Buffer.from(msg.slice(32 + 24, 36 + 24)).readFloatLE() * 10000
       ) / 100;
     pitch =
-      (invertPitch *
-        Math.floor(
-          Buffer.from(msg.slice(36 + 24, 40 + 24)).readFloatLE() * 10000
-        )) /
-      100;
+      Math.floor(
+        Buffer.from(msg.slice(36 + 24, 40 + 24)).readFloatLE() * 10000
+      ) / 100;
     roll =
-      (invertRoll *
-        Math.floor(
-          Buffer.from(msg.slice(40 + 24, 44 + 24)).readFloatLE() * 10000
-        )) /
-      100;
+      Math.floor(
+        Buffer.from(msg.slice(40 + 24, 44 + 24)).readFloatLE() * 10000
+      ) / 100;
     gear = Buffer.from(msg.slice(319, 320)).readUInt8();
     throttle = Buffer.from(msg.slice(315, 316)).readUInt8();
     brake = Buffer.from(msg.slice(316, 317)).readUInt8();
+    maxRPM =
+      Math.floor(Buffer.from(msg.slice(8, 12)).readFloatLE() * 100) / 100;
   }
 
   // adding other games here should work as intended, although scalar values may need to be adjusted
@@ -114,6 +96,7 @@ function handleMessage(msg) {
     throttle,
     brake,
     yAccel,
+    maxRPM,
   ];
   sendDataToRenderer(returnData);
 }
@@ -122,19 +105,20 @@ function handleMessage(msg) {
 // the data returned by here will also correspond to the threejs cars
 function dataProcessing(data) {
   let rpm = data[0];
-  let xAccel = xAccelMovingAverage(data[5]) * linearAccelValue;
-  let zAccel = yAccelMovingAverage(data[6]) * linearAccelValue;
-  let yAccel = yAccelMovingAverage(data[10]) * linearAccelValue;
+  let xAccel = xAccelMovingAvg(data[5]) * sensitivity;
+  let zAccel = zAccelMovingAvg(data[6]) * sensitivity;
+  let yAccel = yAccelMovingAvg(data[10]) * sensitivity;
   let gForce = calculateGForce(
-    xAccelMovingAverage(data[5]),
-    yAccelMovingAverage(data[6])
+    xAccelMovingAvg(data[5]),
+    zAccelMovingAvg(data[6])
   );
-  let yaw = data[2];
-  let pitch = pitchMovingAverage(data[3]) * 1;
-  let roll = rollMovingAverage(data[4]) * 1;
+  let yaw = yawMovingAvg(data[2]) * sensitivity;
+  let pitch = pitchMovingAvg(data[3]) * sensitivity * 70;
+  let roll = rollMovingAvg(data[4]) * sensitivity * 70;
   let gear = data[7];
   let throttle = data[8];
   let brake = data[9];
+  let maxRPM = data[11];
 
   const returnData = [
     rpm,
@@ -148,6 +132,7 @@ function dataProcessing(data) {
     throttle,
     brake,
     yAccel,
+    maxRPM,
   ];
   return returnData;
 }
@@ -172,13 +157,13 @@ function calculateGForce(x, z) {
   return gForce;
 }
 
-const xAccelMovingAverage = (function () {
-  let windowSize = maAccelValue;
+function createMovingAvg() {
+  let windowSize = smoothing;
   const values = [];
 
   return function (newValue) {
-    if (maAccelValue !== windowSize) {
-      windowSize = maAccelValue;
+    if (smoothing !== windowSize) {
+      windowSize = smoothing;
       values.length = 0;
     }
     values.push(newValue);
@@ -191,67 +176,12 @@ const xAccelMovingAverage = (function () {
 
     return sum / values.length;
   };
-})();
+}
 
-const yAccelMovingAverage = (function () {
-  let windowSize = maAccelValue;
-  const values = [];
-
-  return function (newValue) {
-    if (maAccelValue !== windowSize) {
-      windowSize = maAccelValue;
-      values.length = 0;
-    }
-    values.push(newValue);
-
-    if (values.length > windowSize) {
-      values.shift();
-    }
-
-    const sum = values.reduce((acc, val) => acc + val, 0);
-
-    return sum / values.length;
-  };
-})();
-
-const pitchMovingAverage = (function () {
-  let windowSize = maRawValue;
-  const values = [];
-
-  return function (newValue) {
-    if (maAccelValue !== windowSize) {
-      windowSize = maAccelValue;
-      values.length = 0;
-    }
-    values.push(newValue);
-
-    if (values.length > windowSize) {
-      values.shift();
-    }
-
-    const sum = values.reduce((acc, val) => acc + val, 0);
-
-    return sum / values.length;
-  };
-})();
-
-const rollMovingAverage = (function () {
-  let windowSize = maRawValue;
-  const values = [];
-
-  return function (newValue) {
-    if (maAccelValue !== windowSize) {
-      windowSize = maAccelValue;
-      values.length = 0;
-    }
-    values.push(newValue);
-
-    if (values.length > windowSize) {
-      values.shift();
-    }
-
-    const sum = values.reduce((acc, val) => acc + val, 0);
-
-    return sum / values.length;
-  };
-})();
+// Create separate moving average functions for each stream
+const xAccelMovingAvg = createMovingAvg();
+const zAccelMovingAvg = createMovingAvg();
+const yAccelMovingAvg = createMovingAvg();
+const yawMovingAvg = createMovingAvg();
+const pitchMovingAvg = createMovingAvg();
+const rollMovingAvg = createMovingAvg();

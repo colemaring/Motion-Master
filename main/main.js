@@ -70,10 +70,14 @@ let userPort,
 
 // values to use in our servo driver
 ipcMain.on("outputSettings", (event, value) => {
-  gForceMode = value[0];
-  pitchAndRollMode = value[1];
-  minAngle = value[2];
-  maxAngle = value[3];
+  minAngle = value[0];
+  maxAngle = value[1];
+});
+
+ipcMain.on("motionControl", (event, value) => {
+  lateralMode = value[2];
+  gForceMode = value[3];
+  pitchAndRollMode = value[4];
 });
 
 // connect to the board using com port
@@ -92,7 +96,7 @@ ipcMain.on("output", (event, value) => {
     console.log("Connected");
     // update html connected text
     mainWindow.webContents.send("update-html-text", [
-      "connected to arduino",
+      "Connected to Arduino",
       true,
     ]);
     let pitch, yaw, roll;
@@ -135,32 +139,12 @@ ipcMain.on("output", (event, value) => {
       roll = data[4];
       xAccel = data[5];
       yAccel = data[6];
+      zAccel = data[10];
 
       if (gForceMode) {
-        // arbitrary scalars dont really matter here
-        // Use accelerations to control servos for all axes
-        let pitchVal = xAccel * -400;
-        let rollVal = yAccel * -400;
-        let yawVal = zAccel * 400;
+        let pitchVal = yAccel * 200;
+        let rollVal = xAccel * -200;
 
-        // Update the servos based on the motion inputs (adjust as needed)
-        a.to(Math.max(minAngle, Math.min(maxAngle, pitchVal + rollVal)));
-        b.to(Math.max(minAngle, Math.min(maxAngle, pitchVal - rollVal)));
-        c.to(Math.max(minAngle, Math.min(maxAngle, yawVal)));
-        d.to(Math.max(minAngle, Math.min(maxAngle, -yawVal)));
-        e.to(Math.max(minAngle, Math.min(maxAngle, pitchVal + yawVal)));
-        f.to(Math.max(minAngle, Math.min(maxAngle, rollVal - yawVal)));
-      } else if (pitchAndRollMode) {
-        // arbitrary scalars
-        // Control for pitch and roll
-        // vals for pitch and roll are between -10 and 10, yaw is 360
-        // console.log(pitch, roll, yaw);
-        let pitchVal = pitch * -6;
-        let rollVal = roll * -6;
-        //let yawVal = yaw / -10;
-        //console.log(yaw, yawVal);
-
-        // Update the servos for pitch, roll, and yaw (adjust accordingly)
         a.to(
           Math.max(
             minAngle,
@@ -187,6 +171,47 @@ ipcMain.on("output", (event, value) => {
             Math.min(maxAngle, maxAngle - 60 + pitchVal + rollVal / 1.4)
           )
         );
+      } else if (pitchAndRollMode) {
+        // vals for pitch and roll are between -10 and 10, yaw is 360
+        let pitchVal = pitch * -12;
+        let rollVal = roll * -12;
+        a.to(
+          Math.max(
+            minAngle,
+            Math.min(maxAngle, maxAngle - 60 + pitchVal - rollVal / 1.4)
+          )
+        );
+        b.to(Math.max(minAngle, Math.min(maxAngle, maxAngle - 60 - rollVal)));
+        c.to(
+          Math.max(
+            minAngle,
+            Math.min(maxAngle, maxAngle - 60 - pitchVal - rollVal / 1.4)
+          )
+        );
+        d.to(
+          Math.max(
+            minAngle,
+            Math.min(maxAngle, maxAngle - 60 - pitchVal + rollVal / 1.4)
+          )
+        );
+        e.to(Math.max(minAngle, Math.min(maxAngle, maxAngle - 60 + rollVal)));
+        f.to(
+          Math.max(
+            minAngle,
+            Math.min(maxAngle, maxAngle - 60 + pitchVal + rollVal / 1.4)
+          )
+        );
+      } else if (lateralMode) {
+        let pitchVal = xAccel * -400;
+        let rollVal = yAccel * -400;
+        let yawVal = zAccel * 400;
+
+        a.to(Math.max(minAngle, Math.min(maxAngle, pitchVal + rollVal)));
+        b.to(Math.max(minAngle, Math.min(maxAngle, pitchVal - rollVal)));
+        c.to(Math.max(minAngle, Math.min(maxAngle, yawVal)));
+        d.to(Math.max(minAngle, Math.min(maxAngle, -yawVal)));
+        e.to(Math.max(minAngle, Math.min(maxAngle, pitchVal + yawVal)));
+        f.to(Math.max(minAngle, Math.min(maxAngle, rollVal - yawVal)));
       }
     });
 
@@ -207,7 +232,7 @@ ipcMain.on("output", (event, value) => {
   // update html text
   board.on("exit", () => {
     mainWindow.webContents.send("update-html-text", [
-      "not connected to arduino",
+      "Disconnected from Arduino",
       true,
     ]);
   });

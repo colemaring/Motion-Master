@@ -146,51 +146,10 @@ Camera.lookAt(new THREE.Vector3(0, 0, 0));
 // simCamera.lookAt(new THREE.Vector3( 0, 0, 0));
 // Camera.zoom *= 100;
 
-// Create text mesh for dynamic data
-let dynamicTextMeshPitch;
-let dynamicTextMeshYaw;
-let dynamicTextMeshRoll;
-
-let fontLoaded = null;
-const loader = new THREE.FontLoader();
-loader.load("renderer/Roboto_Regular.json", function (font) {
-  fontLoaded = font;
-  const textGeometryPitch = new THREE.TextGeometry("Pitch: 0", {
-    font: font,
-    size: 4,
-    height: 1,
-  });
-  const textGeometryYaw = new THREE.TextGeometry("Yaw: 0", {
-    font: font,
-    size: 4,
-    height: 1,
-  });
-  const textGeometryRoll = new THREE.TextGeometry("Roll: 0", {
-    font: font,
-    size: 4,
-    height: 1,
-  });
-  const textMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  dynamicTextMeshPitch = new THREE.Mesh(textGeometryPitch, textMaterial);
-  dynamicTextMeshYaw = new THREE.Mesh(textGeometryYaw, textMaterial);
-  dynamicTextMeshRoll = new THREE.Mesh(textGeometryRoll, textMaterial);
-
-  dynamicTextMeshPitch.position.set(20, -38, 55); // Adjust position as needed
-  dynamicTextMeshYaw.position.set(20, -45, 55);
-  dynamicTextMeshRoll.position.set(20, -52, 55);
-
-  dynamicTextMeshPitch.rotation.y = Math.PI / 2;
-  dynamicTextMeshYaw.rotation.y = Math.PI / 2;
-  dynamicTextMeshRoll.rotation.y = Math.PI / 2;
-
-  Scene.add(dynamicTextMeshPitch);
-  Scene.add(dynamicTextMeshYaw);
-  Scene.add(dynamicTextMeshRoll);
-});
-
 let xAccel,
   yAccel,
   pitch,
+  zAccel,
   yaw,
   roll = null;
 
@@ -202,32 +161,8 @@ ipcRenderer.on("data", (event, data) => {
   roll = data[4];
   xAccel = data[5];
   yAccel = data[6];
-  // Update dynamic text
-  if (dynamicTextMeshPitch && fontLoaded) {
-    const newTextPitch = `Pitch: ${pitch.toFixed(1)}`;
-    const newTextYaw = `Yaw: ${yaw.toFixed(1)}`;
-    const newTextRoll = `Roll: ${roll.toFixed(1)}`;
+  zAccel = data[10];
 
-    dynamicTextMeshPitch.geometry.dispose(); // Dispose of old geometry
-    dynamicTextMeshYaw.geometry.dispose();
-    dynamicTextMeshRoll.geometry.dispose();
-
-    dynamicTextMeshPitch.geometry = new THREE.TextGeometry(newTextPitch, {
-      font: fontLoaded,
-      size: 5,
-      height: 1,
-    });
-    dynamicTextMeshYaw.geometry = new THREE.TextGeometry(newTextYaw, {
-      font: fontLoaded,
-      size: 5,
-      height: 1,
-    });
-    dynamicTextMeshRoll.geometry = new THREE.TextGeometry(newTextRoll, {
-      font: fontLoaded,
-      size: 5,
-      height: 1,
-    });
-  }
 });
 
 function animate() {
@@ -240,6 +175,22 @@ function animate() {
     new THREE.Euler(pitch * Sensitivity, 0, -1 * roll * Sensitivity, "XYZ")
   );
   car1.quaternion.copy(car1Quaternion);
+
+  var car2Quaternion = new THREE.Quaternion();
+  car2Quaternion.setFromEuler(
+    new THREE.Euler(
+      yAccel * -1 * Sensitivity * 40,
+      0,
+      -1 * xAccel * Sensitivity * 40,
+      "XYZ"
+    )
+  );
+
+  car2.quaternion.copy(car2Quaternion);
+
+  car3.position.x = xAccel * -30;
+  car3.position.z = yAccel * 30;
+  car3.position.y = zAccel * 30 + 35;
   Controls.update();
 
   // update quaternion for simScene

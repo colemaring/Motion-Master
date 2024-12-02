@@ -13,7 +13,8 @@
     "electron": "^24.2.0",
     "electron-reload": "^2.0.0-alpha.1",
     "johnny-five": "^2.1.0",
-    "three": "^0.152.2"
+    "three": "^0.152.2",
+    "troika-three-text": "^0.50.2"
   },
   "devDependencies": {
     "@electron/rebuild": "^3.2.13"

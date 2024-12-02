@@ -29,35 +29,20 @@
                     <label class = "inputLabel" for="portSelector">Port: </label>
                     <input value = "5300" type="text" id = "portSelector"><br>
                     <button class = "button" id = "inputApply">Apply</button>
-                    <h3 id = "connectionStatus">not connected to game</h3>
+                    <h3 id = "connectionStatus">Not connected to a game</h3>
                 </div>
                 <div id = "motionControl" class="tabcontent">
                     <h3 class = "headerLabel">Motion Control</h3>
                     <input type="range" id = "motion_sensitivity_slider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
-                    <label class = "inputLabel" for="linearAccelSlider">motion sensitivity</label><br>
+                    <label class = "inputLabel" for="linearAccelSlider">Motion sensitivity</label><br>
                     <input type="range" id = "motion_smoothing_slider" step = 1 value = 2 min = 1 max = 20>
-                    <label class = "inputLabel" for="maAccelSlider">motion smoothing</label><br>
-                    <!-- <input type="range" id = "rawSlider" step = 0.001 value = 2 min = 0.001 max = 4>
-                    <label class = "inputLabel" for="rawSlider">Pitch and roll simulation sensitivity</label><br>
-                    <input type="range" id = "maRawSlider" step = 1 value = 8 min = 1 max = 20>
-                    <label class = "inputLabel" for="maRawSlider">Pitch and roll motion smoothing</label><br> -->
-                    <!-- <input type="checkbox" id="servosInvertX">
-                    <label class = "inputLabel" for="servosInvertX">Invert pitch rotation</label><br>
-                    <input type="checkbox" id="servosInvertY">
-                    <label class = "inputLabel" for="servosInvertY">Invert roll rotation</label><br> -->
-                    <!-- <input type="checkbox" id="euler_mode">
-                    <label class = "inputLabel" for="servosInvertY">euler_mode</label><br>
-                    <input type="checkbox" id="gforce_mode">
-                    <label class = "inputLabel" for="servosInvertY">gforce_mode</label><br>
-                    <input type="checkbox" id="lateral_only_mode"> -->
+                    <label class = "inputLabel" for="maAccelSlider">Motion smoothing</label><br>
                     <input type="checkbox" id="lateral_only_mode">
                     <label class = "inputLabel" for="servosInvertY"> Lateral accel only mode</label><br>
                     <input type="checkbox" id="linearAccelCheckbox">
                     <label class = "inputLabel" for="linearAccelCheckbox">  G-Force simulation mode</label><br>
                     <input type="checkbox" id="pitchAndRollCheckbox">
                     <label class = "inputLabel" for="pitchAndRollCheckbox"> Euler angle simulation mode</label><br>
-                    <input type="checkbox" id="combination">
-                    <label class = "inputLabel" for="servosInvertY"> Acceleration onset cueing mode</label><br>
                     <button  class = "button" id = "motionControlApply">Apply</button>
                 </div>          
                 <div id = "output" class="tabcontent">
@@ -66,12 +51,12 @@
                     <input value = "COM3" type="text" id = "arduinoPort"><br>
                     <button  class = "button" id = "outputApply">Apply</button><br><br>
                     
-                    <label class = "inputLabel" for="servo1OffsetText">Servo minimum angle: </label>
-                    <input value = "40" type="text" id = "servo1Offset"><br>
-                    <label class = "inputLabel" for="servo2OffsetText">Servo maximum angle: </label>
-                    <input value = "180" type="text" id = "servo2Offset"><br>
+                    <label class = "inputLabel" for="servoMinAngle">Servo minimum angle: </label>
+                    <input value = "40" type="text" id = "servoMinAngle"><br>
+                    <label class = "inputLabel" for="servoMaxAngle">Servo maximum angle: </label>
+                    <input value = "180" type="text" id = "servoMaxAngle"><br>
                     <button  class = "button" id = "outputApplySettings" disabled>Apply</button><br>
-                    <h3 id = "arduinoConnected">not connected to arduino</h3>
+                    <h3 id = "arduinoConnected">Disconnected from Arduino</h3>
                 </div>
                 <!-- <div id = "test" class="tabcontent">
                     <h3 class = "headerLabel">Test</h3>
@@ -93,55 +78,42 @@
                     <canvas id="tractionCircle" width="280" height="280"></canvas>
                 </div>
     
-                <div class = "telemetryData prettyContainer square" id = "PitchYawRollRpmContainer">
-                    <!-- <div id = "pitch">
-                        <span class = "pitchYawRollRpmFont">Pitch: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "pitchValue">0</span>
+                <div class="telemetryData prettyContainer square" id="PitchYawRollRpmContainer">
+                    <div class="grid-container">
+                      <div id="throttle" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Throttle %: </span>
+                        <span class="centered pitchYawRollRpmFont" id="throttleValue">0</span>
+                      </div>
+                      <div id="brake" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Brake %: </span>
+                        <span class="centered pitchYawRollRpmFont" id="brakeValue">0</span>
+                      </div>
+                      <div id="gear" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Gear: </span>
+                        <span class="centered pitchYawRollRpmFont" id="gearValue">0</span>
+                      </div>
+                      <div id="rpm" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Rpm: </span>
+                        <span class="centered pitchYawRollRpmFont" id="rpmValue">0</span><span class="pitchYawRollRpmFont">-------</span><span class="centered pitchYawRollRpmFont" id="maxrpmValue">0</span>
+                      </div>
                     </div>
-                    <div id = "yaw">
-                        <span class = "pitchYawRollRpmFont">Yaw: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "yawValue">0</span>
-                    </div>
-                    <div id = "roll">
-                        <span class = "pitchYawRollRpmFont">Roll: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "rollValue">0</span>
-                    </div> -->
-                    <div id = "xAccel">  
-                        <span class = "pitchYawRollRpmFont">xAccel: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "xAccelValue">0</span>
-                    </div>
-                    <div id = "yAccel">  
-                        <span class = "pitchYawRollRpmFont">yAccel: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "yAccelValue">0</span>
-                    </div>
-                    <div id = "zAccel">  
-                        <span class = "pitchYawRollRpmFont">zAccel: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "zAccelValue">0</span>
-                    </div>
-                    <div id = "throttle">  
-                        <span class = "pitchYawRollRpmFont">Throttle %: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "throttleValue">0</span>
-                    </div>
-                    <div id = "brake">  
-                        <span class = "pitchYawRollRpmFont">Brake %: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "brakeValue">0</span>
-                    </div>
-                    <div id = "gear">  
-                        <span class = "pitchYawRollRpmFont">Gear: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "gearValue">0</span>
-                    </div>
-                    <div id = "rpm">  
-                        <span class = "pitchYawRollRpmFont">Rpm: </span>
-                        <span class = "centered pitchYawRollRpmFont" id = "rpmValue">0</span>
-                    </div>
-                    
-                    
-                </div>
+                  </div>
             </div>
         </div>
 
         <div class = "rightContainer pretty">
             <canvas id = "rawCanvas" class = "scene"></canvas>
+            <div id="overlayTextContainer">
+                <div id="heaveText" class="overlayText">Heave: 0</div>
+                <div id="swayText" class="overlayText">Sway: 0</div>
+                <div id="surgeText" class="overlayText">Surge: 0</div>
+                <div id="pitchText" class="overlayText">Pitch: 0</div>
+                <div id="yawText" class="overlayText">Yaw: 0</div>
+                <div id="rollText" class="overlayText">Roll: 0</div>
+                <div id="xAccelText" class="overlayText">xAccel: 0</div>
+                <div id="yAccelText" class="overlayText">yAccel: 0</div>
+                <div id="zAccelText" class="overlayText">zAccel: 0</div>
+              </div>
         </div>
 
     </div>
