@@ -1,21 +1,15 @@
 # Motion Master![icon1](https://github.com/colemaring/Motion-Master/assets/65455664/c22a50dd-2108-4e5d-b7ea-bf9f34ffd181)
 
 
-
-Motion Master is an application to control a 2DOF Arduino motion simulator and view its corresponding telemetry.   
+Motion Master is an application to control a 6DOF Arduino motion simulator and view its corresponding telemetry.   
 <br>
 ![](https://github.com/colemaring/Motion-Master/blob/main/renderer/video.gif)    
 https://www.youtube.com/watch?v=blXVVoAPlQ4   
 
 ## Installation
-
-
 ```bash
-git clone https://github.com/colemaring/Motion-Master && cd Motion-Master
-
-npm install
-
-npm run start
+git clone https://github.com/colemaring/Motion-Master && cd Motion-Master && npm i
+npm start
 ```
 
 ## Usage
@@ -54,7 +48,8 @@ design your own motion simulator, you can use the STLs and hardware information 
 1 6V power supply  
 4 male to female jumper wires  
 Assortment of M2 nuts and bolts
-Approx 177g of PLA filament ([view stls](https://github.com/colemaring/Motion-Master/tree/main/stls))
+Approx 177g of PLA filament ([view stls](https://github.com/colemaring/Motion-Master/tree/main/stls/6dof))
+
 
 ## Development
 My initial vision for this project was to create a program that would visualize and compare different sets of motion that could be extracted from a racing game. I wanted to compare how pitch and roll motion might differ from lateral x and y acceleration motion, and visualize how that might look on a motion simulator. 
