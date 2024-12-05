@@ -27,7 +27,7 @@ Here is where you can establish a connection to the game. In order to establish 
 ![Screenshot 2024-12-05 150911](https://github.com/user-attachments/assets/cb3deea0-609a-41c7-88cb-8f1cdbe0ef07)
 This is where you can change the sensitivity, motion smoothing, and simulation mode for your motion simulator. Changes here will also reflect on the 3d cars on the right side. High sensitivity will cause a jittery motion due to minor details being exaggerated. However, too much motion smoothing will cause details to mellow out.
 ### Output: 
-![3e569243480e0b45daae3a3019ebdac3](https://github.com/colemaring/Motion-Master/assets/65455664/1f61fdcb-4191-4bd8-97cb-2bf4bb02bfee)   
+![Screenshot 2024-12-05 150923](https://github.com/user-attachments/assets/1c67879d-c67b-4b44-b28b-dffb04d63293)
 Here is where you can connect Motion Master to your Arduino motion simulator ([view Arduino setup](#arduino-setup)). Specify the communications port your Arduino is connected to and click apply. Upon a successful connection, you should see the text at the bottom change to notify you of a successful connection. Specify the minimum and maximum angle your servos can reach given the physical constraints of the linear actuator. Click apply to apply your settings.
 ### Arduino Setup:
 Open Arduino IDE -> Select Board -> File -> Examples -> Firmata -> StandardFirmataPlus.   
