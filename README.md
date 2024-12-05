@@ -39,9 +39,6 @@ Please note that Motion Master will only work on pins 0 and 1 on a pca9685.
 It is recommended to power your pca9685 externally via a 6v -ish power supply.
 
 ## Hardware
-Motion Master can be configured to support different kinds of 2DOF layouts. However, if you do not want to
-design your own motion simulator, you can use the STLs and hardware information provided.
-
 1 Arduino Uno or similar   
 1 pca9685  
 6 9g micro servos  
@@ -64,5 +61,4 @@ My next goal with this project is to implement more advanced motion cueing that 
 ![Screenshot 2024-12-05 150555](https://github.com/user-attachments/assets/6d280c09-367a-4428-939f-3e095f9e6275)
 
 ## License
-
 [MIT](https://choosealicense.com/licenses/mit/)
