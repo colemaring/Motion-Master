@@ -4,7 +4,7 @@
 Motion Master is an application to control a 6DOF Arduino motion simulator and view its corresponding telemetry.   
 <br>
 
-![20241205_1450451-ezgif com-optimize (1)](https://github.com/user-attachments/assets/0156f9c3-cb6b-45a5-993d-2921084a7c35)
+![20241205_1450451-ezgif com-optimize (1)](https://github.com/user-attachments/assets/0156f9c3-cb6b-45a5-993d-2921084a7c35) <br>
 [Youtube Video](https://www.youtube.com/watch?v=blXVVoAPlQ4)    <br>
 The visual glitch seen on the GUI has since been fixed. <br>
 
