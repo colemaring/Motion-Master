@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Motion Master</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class = "content">
+        <div class = "leftContainer">
+            <div class = "tabContainer prettyContainer">
+                <div class="tab">
+                    <button class="tablinks" id = "inputButton">Input</button>
+                    <button class="tablinks" id = "motionControlButton">Motion Control</button>
+                    <button class="tablinks" id = "outputButton">Output</button>
+                    <!-- <button class="tablinks" id = "testButton">Test</button> -->
+                </div>
+                
+                <div id = "input" class="tabcontent">
+                    <h3 class = "headerLabel">Input</h3>
+                    <label class = "inputLabel" for="gameSelector">Game: </label>
+                    <select name="game" id="gameSelector">
+                        <option value="FH5">FH5</option>
+                    </select><br>
+                    <label class = "inputLabel" for="portSelector">Port: </label>
+                    <input value = "5300" type="text" id = "portSelector"><br>
+                    <button class = "button" id = "inputApply">Apply</button>
+                    <h3 id = "connectionStatus">Not connected to a game</h3>
+                </div>
+                <div id = "motionControl" class="tabcontent">
+                    <h3 class = "headerLabel">Motion Control</h3>
+                    <input type="range" id = "motion_sensitivity_slider" step = 0.001 value = 0.01 min = 0.001 max = 0.03>
+                    <label class = "inputLabel" for="linearAccelSlider">Motion sensitivity</label><br>
+                    <input type="range" id = "motion_smoothing_slider" step = 1 value = 2 min = 1 max = 20>
+                    <label class = "inputLabel" for="maAccelSlider">Motion smoothing</label><br>
+                    <input type="checkbox" id="lateral_only_mode">
+                    <label class = "inputLabel" for="servosInvertY"> Lateral accel only mode</label><br>
+                    <input type="checkbox" id="linearAccelCheckbox">
+                    <label class = "inputLabel" for="linearAccelCheckbox">  G-Force simulation mode</label><br>
+                    <input type="checkbox" id="pitchAndRollCheckbox">
+                    <label class = "inputLabel" for="pitchAndRollCheckbox"> Euler angle simulation mode</label><br>
+                    <button  class = "button" id = "motionControlApply">Apply</button>
+                </div>          
+                <div id = "output" class="tabcontent">
+                    <h3 class = "headerLabel">Output</h3>
+                    <label class = "inputLabel" for="arduinoPort">Arduino port: </label>
+                    <input value = "COM3" type="text" id = "arduinoPort"><br>
+                    <button  class = "button" id = "outputApply">Apply</button><br><br>
+                    
+                    <label class = "inputLabel" for="servoMinAngle">Servo minimum angle: </label>
+                    <input value = "40" type="text" id = "servoMinAngle"><br>
+                    <label class = "inputLabel" for="servoMaxAngle">Servo maximum angle: </label>
+                    <input value = "180" type="text" id = "servoMaxAngle"><br>
+                    <button  class = "button" id = "outputApplySettings" disabled>Apply</button><br>
+                    <h3 id = "arduinoConnected">Disconnected from Arduino</h3>
+                </div>
+                <!-- <div id = "test" class="tabcontent">
+                    <h3 class = "headerLabel">Test</h3>
+                    <p>WARNING: This will move your simulator platform if it is connected!</p>
+                    <input type="range" id = "pitchTestSlider" min = "0" max = "180">
+                    <label class = "inputLabel" for="pitchTestSlider">Test pitch motion</label><br>
+                    <input type="range" id = "rollTestSlider" min = "0" max = "180">
+                    <label class = "inputLabel" for="rollTestSlider">Test roll motion</label><br>
+                </div>   -->
+            </div>
+
+            <div id = "telemetryContainer">
+                <div class = "tractionCircleContainer prettyContainer square">
+                    <div id = "gForceTextContainer">
+                        <h1>Gs</h1>
+                        <h3 id = "gForce">0</h3>
+                    </div>
+                    
+                    <canvas id="tractionCircle" width="280" height="280"></canvas>
+                </div>
+    
+                <div class="telemetryData prettyContainer square" id="PitchYawRollRpmContainer">
+                    <div class="grid-container">
+                      <div id="throttle" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Throttle %: </span>
+                        <span class="centered pitchYawRollRpmFont" id="throttleValue">0</span>
+                      </div>
+                      <div id="brake" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Brake %: </span>
+                        <span class="centered pitchYawRollRpmFont" id="brakeValue">0</span>
+                      </div>
+                      <div id="gear" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Gear: </span>
+                        <span class="centered pitchYawRollRpmFont" id="gearValue">0</span>
+                      </div>
+                      <div id="rpm" class="grid-item">  
+                        <span class="pitchYawRollRpmFont">Rpm: </span>
+                        <span class="centered pitchYawRollRpmFont" id="rpmValue">0</span><span class="pitchYawRollRpmFont">-------</span><span class="centered pitchYawRollRpmFont" id="maxrpmValue">0</span>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+        <div class = "rightContainer pretty">
+            <canvas id = "rawCanvas" class = "scene"></canvas>
+            <div id="overlayTextContainer">
+                <div id="heaveText" class="overlayText">Heave: 0</div>
+                <div id="swayText" class="overlayText">Sway: 0</div>
+                <div id="surgeText" class="overlayText">Surge: 0</div>
+                <div id="pitchText" class="overlayText">Pitch: 0</div>
+                <div id="yawText" class="overlayText">Yaw: 0</div>
+                <div id="rollText" class="overlayText">Roll: 0</div>
+                <div id="xAccelText" class="overlayText">xAccel: 0</div>
+                <div id="yAccelText" class="overlayText">yAccel: 0</div>
+                <div id="zAccelText" class="overlayText">zAccel: 0</div>
+              </div>
+        </div>
+
+    </div>
+    <script src="src/tabmenu.js"></script>
+    <script src="src/telemetry.js"></script>
+    <script type = "module" src="src/three.js"></script>
+    <script src = "../threecdn/three.min.js"></script>
+    <script src = "../threecdn/threeorbit.js"></script>
+  </body>
+</html>

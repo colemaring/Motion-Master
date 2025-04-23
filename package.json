@@ -1,22 +1,45 @@
 {
-  "name": "motionv4",
-  "version": "4.0.0",
-  "description": "2dof motion simulator software",
-  "main": "main/main.js",
-  "scripts": {
-    "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "name": "motion-master",
+  "version": "1.0.0",
+  "description": "Motion Master controls your Arduino motion simulator and shows you real-time telemetry.",
+  "main": "./out/main/index.js",
   "author": "Colton Maring",
-  "license": "ISC",
+  "homepage": "https://github.com/colemaring/Motion-Master",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
+  },
+  "build": {
+    "win": {
+      "icon": "src/renderer/assets/icon.png"
+    },
+    "asarUnpack": [
+      "**/node_modules/johnny-five/**/*",
+      "**/node_modules/firmata/**/*"
+    ]
+  },
   "dependencies": {
-    "electron": "^24.2.0",
-    "electron-reload": "^2.0.0-alpha.1",
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0",
     "johnny-five": "^2.1.0",
-    "three": "^0.152.2",
-    "troika-three-text": "^0.50.2"
+    "firmata": "^2.3.0"
   },
   "devDependencies": {
-    "@electron/rebuild": "^3.2.13"
+    "@electron-toolkit/eslint-config": "^2.0.0",
+    "@electron-toolkit/eslint-config-prettier": "^3.0.0",
+    "electron": "^35.1.5",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^3.1.0",
+    "eslint": "^9.24.0",
+    "prettier": "^3.5.3",
+    "vite": "^6.2.6"
   }
 }
