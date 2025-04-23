@@ -67,6 +67,9 @@ let userPort,
   pitchAndRollMode,
   minAngle,
   lateralMode,
+  xAccel,
+  yAccel,
+  zAccel,
   maxAngle = null
 
 // values to use in our servo driver
