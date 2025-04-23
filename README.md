@@ -9,10 +9,7 @@ Motion Master is an application to control a 6DOF Arduino motion simulator and v
 https://www.youtube.com/watch?v=blXVVoAPlQ4   
 
 ## Installation
-```bash
-git clone https://github.com/colemaring/Motion-Master && cd Motion-Master && npm i
-npm start
-```
+[https://github.com/colemaring/Motion-Master/releases](Download the latest release here.)
 
 ## Usage
 
@@ -49,6 +46,11 @@ It is recommended to power your pca9685 externally via a 6v -ish power supply.
 Assortment of M2 nuts and bolts
 Approx 177g of PLA filament ([view stls](https://github.com/colemaring/Motion-Master/tree/main/stls/6dof))
 
+## Developers
+```bash
+git clone https://github.com/colemaring/Motion-Master && cd Motion-Master && npm i
+npm run dev
+```
 
 ## Development
 My initial vision for this project was to create a program that would visualize and compare different sets of motion that could be extracted from a racing game. I wanted to compare how pitch and roll motion might differ from lateral x and y acceleration motion, and visualize how that might look on a motion simulator. 
